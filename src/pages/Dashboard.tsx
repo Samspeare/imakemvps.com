@@ -19,7 +19,7 @@ import {
   Activity,
   Database,
   CreditCard,
-  Robot,
+  Bot,
   Play,
   Upload,
 } from "lucide-react";
@@ -127,7 +127,7 @@ const Dashboard = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Robot className="h-5 w-5" />
+              <Bot className="h-5 w-5" />
               Agent Status
             </CardTitle>
           </CardHeader>
