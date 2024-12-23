@@ -29,14 +29,15 @@ type SettingsFormValues = z.infer<typeof settingsSchema>;
 
 interface AgentSettingsProps {
   onSubmit: (values: SettingsFormValues) => void;
+  initialValues?: Partial<SettingsFormValues>;
 }
 
-export function AgentSettings({ onSubmit }: AgentSettingsProps) {
+export function AgentSettings({ onSubmit, initialValues }: AgentSettingsProps) {
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(settingsSchema),
     defaultValues: {
-      labelFormat: "uppercase",
-      autoApplyToUnread: true,
+      labelFormat: (initialValues?.labelFormat as SettingsFormValues['labelFormat']) || "uppercase",
+      autoApplyToUnread: initialValues?.autoApplyToUnread ?? true,
     },
   });
 

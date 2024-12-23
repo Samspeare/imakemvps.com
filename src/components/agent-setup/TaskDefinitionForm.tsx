@@ -23,14 +23,15 @@ type TaskFormValues = z.infer<typeof taskSchema>;
 
 interface TaskDefinitionFormProps {
   onSubmit: (values: TaskFormValues) => void;
+  initialValues?: Partial<TaskFormValues>;
 }
 
-export function TaskDefinitionForm({ onSubmit }: TaskDefinitionFormProps) {
+export function TaskDefinitionForm({ onSubmit, initialValues }: TaskDefinitionFormProps) {
   const form = useForm<TaskFormValues>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
-      categories: "Work, Personal, Urgent",
-      testEmail: "",
+      categories: initialValues?.categories || "Work, Personal, Urgent",
+      testEmail: initialValues?.testEmail || "",
     },
   });
 
