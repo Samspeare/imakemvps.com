@@ -17,7 +17,13 @@ async function callWebhook(payload: any) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({
+        agent_name: payload.agent_name,
+        agent_type: payload.agent_type,
+        settings: payload.settings,
+        user_id: payload.user_id,
+        action: payload.action
+      }),
     })
     
     if (!response.ok) {

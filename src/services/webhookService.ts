@@ -45,11 +45,14 @@ async function callWebhookWithRetry(payload: any, retryCount = 0): Promise<Respo
 export const webhookService = {
   async notifyAgentCreation(agentName: string, agentType: string, settings: any, userId: string) {
     const payload = {
-      event: 'agent_creation',
       agent_name: agentName,
       agent_type: agentType,
-      settings,
+      settings: {
+        categories: settings.categories.split(',').map((c: string) => c.trim()),
+        label_style: settings.labelFormat || 'Uppercase'
+      },
       user_id: userId,
+      action: 'create'
     };
 
     try {
@@ -62,12 +65,16 @@ export const webhookService = {
     }
   },
 
-  async notifyAgentAction(action: 'update' | 'deactivate' | 'delete', agentId: string, updatedSettings?: any) {
+  async notifyAgentAction(action: 'update' | 'deactivate' | 'delete', agentId: string, agentName: string, settings?: any) {
     const payload = {
-      event: 'agent_action',
-      action,
-      agent_id: agentId,
-      ...(updatedSettings && { updated_settings: updatedSettings }),
+      agent_name: agentName,
+      agent_type: 'Inbox Label Handler',
+      settings: settings ? {
+        categories: settings.categories.split(',').map((c: string) => c.trim()),
+        label_style: settings.labelFormat || 'Uppercase'
+      } : undefined,
+      user_id: (await supabase.auth.getUser()).data.user?.id,
+      action: action === 'deactivate' ? 'update' : action
     };
 
     try {
