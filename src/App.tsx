@@ -8,6 +8,8 @@ import Footer from "./components/Footer";
 import Index from "./pages/Index";
 import Blog from "./pages/Blog";
 import Contact from "./pages/Contact";
+import Auth from "./pages/Auth";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -21,9 +23,20 @@ const App = () => (
           <Navbar />
           <main className="flex-grow">
             <Routes>
+              {/* Public Routes */}
               <Route path="/" element={<Index />} />
               <Route path="/blog" element={<Blog />} />
-              <Route path="/contact" element={<Contact />} />
+              <Route path="/auth" element={<Auth />} />
+              
+              {/* Protected Routes */}
+              <Route
+                path="/contact"
+                element={
+                  <ProtectedRoute>
+                    <Contact />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </main>
           <Footer />
