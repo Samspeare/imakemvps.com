@@ -1,8 +1,44 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const location = useLocation();
+  const { toast } = useToast();
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      toast({
+        title: "Signed out successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error signing out",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   const links = [
     { to: "/", label: "Home" },
@@ -40,6 +76,22 @@ const Navbar = () => {
                 )}
               </Link>
             ))}
+
+            {user ? (
+              <Button
+                variant="ghost"
+                onClick={handleSignOut}
+                className="text-sm font-medium"
+              >
+                Sign Out
+              </Button>
+            ) : (
+              <Link to="/auth">
+                <Button variant="default" className="text-sm font-medium">
+                  Sign In
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>
