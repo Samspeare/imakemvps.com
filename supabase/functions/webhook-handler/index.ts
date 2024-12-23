@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
-const WEBHOOK_URL = "https://imakemvps.app.n8n.cloud/webhook-test/e13b2f81-776d-4e37-8531-33a0611d72ee"
+const WEBHOOK_URL = "https://mvpsnow.free.beeceptor.com"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
