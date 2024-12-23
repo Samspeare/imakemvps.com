@@ -46,9 +46,32 @@ const Auth = () => {
                   },
                 },
               },
+              style: {
+                button: {
+                  borderRadius: '4px',
+                  backgroundColor: 'rgb(var(--color-primary))',
+                  color: 'white',
+                  padding: '10px',
+                  marginTop: '10px',
+                },
+                input: {
+                  borderRadius: '4px',
+                  border: '1px solid #e2e8f0',
+                  padding: '10px',
+                },
+                label: {
+                  color: '#4a5568',
+                  marginBottom: '4px',
+                },
+                message: {
+                  color: '#e53e3e',
+                  marginTop: '4px',
+                },
+              },
             }}
             providers={[]}
             redirectTo={window.location.origin}
+            view="sign_in"
           />
         </div>
       </div>
