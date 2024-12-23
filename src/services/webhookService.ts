@@ -1,4 +1,5 @@
-const WEBHOOK_URL = "https://imakemvps.app.n8n.cloud/webhook-test/e13b2f81-776d-4e37-8531-33a0611d72ee";
+import { supabase } from "@/integrations/supabase/client";
+
 const MAX_RETRIES = 3;
 
 interface WebhookError extends Error {
@@ -9,18 +10,14 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function callWebhookWithRetry(payload: any, retryCount = 0): Promise<Response> {
   try {
-    const response = await fetch(WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors', // Add no-cors mode to handle CORS restrictions
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
+    const { data, error } = await supabase.functions.invoke('webhook-handler', {
+      body: payload,
     });
 
-    // With no-cors mode, we won't get a proper response status
-    // but at least the request will be sent
-    return response;
+    if (error) throw error;
+    if (!data.success) throw new Error('Webhook call failed');
+
+    return new Response(null, { status: 200 });
   } catch (error) {
     const webhookError = error as WebhookError;
     webhookError.attempt = retryCount + 1;
@@ -32,9 +29,7 @@ async function callWebhookWithRetry(payload: any, retryCount = 0): Promise<Respo
       return callWebhookWithRetry(payload, retryCount + 1);
     }
 
-    // Instead of throwing, we'll return a "fake" successful response
-    // since we can't verify the actual response with no-cors mode
-    return new Response(null, { status: 200 });
+    throw webhookError;
   }
 }
 
