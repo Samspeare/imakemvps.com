@@ -10,12 +10,21 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 async function callWebhookWithRetry(payload: any, retryCount = 0): Promise<Response> {
   try {
+    console.log('Calling webhook with payload:', payload);
+    
     const { data, error } = await supabase.functions.invoke('webhook-handler', {
       body: payload,
     });
 
-    if (error) throw error;
-    if (!data.success) throw new Error('Webhook call failed');
+    if (error) {
+      console.error('Supabase function error:', error);
+      throw error;
+    }
+    
+    if (!data.success) {
+      console.error('Webhook call failed:', data.error);
+      throw new Error(data.error || 'Webhook call failed');
+    }
 
     return new Response(null, { status: 200 });
   } catch (error) {
@@ -36,6 +45,7 @@ async function callWebhookWithRetry(payload: any, retryCount = 0): Promise<Respo
 export const webhookService = {
   async notifyAgentCreation(agentName: string, agentType: string, settings: any, userId: string) {
     const payload = {
+      event: 'agent_creation',
       agent_name: agentName,
       agent_type: agentType,
       settings,
@@ -54,6 +64,7 @@ export const webhookService = {
 
   async notifyAgentAction(action: 'update' | 'deactivate' | 'delete', agentId: string, updatedSettings?: any) {
     const payload = {
+      event: 'agent_action',
       action,
       agent_id: agentId,
       ...(updatedSettings && { updated_settings: updatedSettings }),
