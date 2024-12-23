@@ -23,6 +23,9 @@ import {
   Play,
   Upload,
 } from "lucide-react";
+import { OnboardingWizard } from "@/components/OnboardingWizard";
+import { EmptyAgentState } from "@/components/EmptyAgentState";
+import { useToast } from "@/components/ui/use-toast";
 
 // Placeholder data for the usage chart
 const usageData = [
@@ -37,10 +40,18 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [isAgentActive, setIsAgentActive] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [hasAgent, setHasAgent] = useState(false); // This would normally be fetched from your backend
+  const { toast } = useToast();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
+      // For demo purposes, we'll show the onboarding modal if it's the user's first visit
+      const hasSeenOnboarding = localStorage.getItem("hasSeenOnboarding");
+      if (!hasSeenOnboarding) {
+        setShowOnboarding(true);
+      }
     });
 
     const {
@@ -52,8 +63,33 @@ const Dashboard = () => {
     return () => subscription.unsubscribe();
   }, []);
 
+  const handleStartSetup = () => {
+    setShowOnboarding(true);
+  };
+
+  const handleCloseOnboarding = () => {
+    setShowOnboarding(false);
+    localStorage.setItem("hasSeenOnboarding", "true");
+    toast({
+      title: "Welcome to your dashboard!",
+      description: "You can start setting up your AI agent anytime from here.",
+    });
+  };
+
   if (!user) {
     return null;
+  }
+
+  if (!hasAgent) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8 animate-fade-up">
+          Welcome, {user.email?.split("@")[0]}!
+        </h1>
+        <EmptyAgentState onStartSetup={handleStartSetup} />
+        <OnboardingWizard open={showOnboarding} onClose={handleCloseOnboarding} />
+      </div>
+    );
   }
 
   return (
@@ -193,6 +229,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+      <OnboardingWizard open={showOnboarding} onClose={handleCloseOnboarding} />
     </div>
   );
 };
