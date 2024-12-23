@@ -1,11 +1,10 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 
-const WEBHOOK_URL = "https://mvpsnow.free.beeceptor.com"
+const WEBHOOK_URL = "https://imakemvps.app.n8n.cloud/webhook-test/e13b2f81-776d-4e37-8531-33a0611d72ee"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
 }
 
 async function callWebhook(payload: any) {
