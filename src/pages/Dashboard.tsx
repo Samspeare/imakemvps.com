@@ -1,31 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { Switch } from "@/components/ui/switch";
 import { User } from "@supabase/supabase-js";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
-import {
-  Activity,
-  Database,
-  CreditCard,
-  Bot,
-  Play,
-  Upload,
-} from "lucide-react";
-import { OnboardingWizard } from "@/components/OnboardingWizard";
+import { Database } from "lucide-react";
+import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
 import { EmptyAgentState } from "@/components/EmptyAgentState";
 import { useToast } from "@/components/ui/use-toast";
+import { AgentsList } from "@/components/dashboard/AgentsList";
+import { QuickActions } from "@/components/dashboard/QuickActions";
+import { UsageStats } from "@/components/dashboard/UsageStats";
 
 // Placeholder data for the usage chart
 const usageData = [
@@ -39,15 +24,13 @@ const usageData = [
 const Dashboard = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [isAgentActive, setIsAgentActive] = useState(false);
+  const [agents, setAgents] = useState([]);
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [hasAgent, setHasAgent] = useState(false); // This would normally be fetched from your backend
   const { toast } = useToast();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
-      // For demo purposes, we'll show the onboarding modal if it's the user's first visit
       const hasSeenOnboarding = localStorage.getItem("hasSeenOnboarding");
       if (!hasSeenOnboarding) {
         setShowOnboarding(true);
@@ -63,6 +46,29 @@ const Dashboard = () => {
     return () => subscription.unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      fetchAgents();
+    }
+  }, [user]);
+
+  const fetchAgents = async () => {
+    const { data, error } = await supabase
+      .from("agents")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to fetch agents",
+        variant: "destructive",
+      });
+    } else {
+      setAgents(data || []);
+    }
+  };
+
   const handleStartSetup = () => {
     setShowOnboarding(true);
   };
@@ -76,11 +82,28 @@ const Dashboard = () => {
     });
   };
 
+  const handleToggleStatus = async (id: string, status: boolean) => {
+    const { error } = await supabase
+      .from("agents")
+      .update({ status: status ? "active" : "inactive" })
+      .eq("id", id);
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to update agent status",
+        variant: "destructive",
+      });
+    } else {
+      fetchAgents();
+    }
+  };
+
   if (!user) {
     return null;
   }
 
-  if (!hasAgent) {
+  if (agents.length === 0) {
     return (
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-8 animate-fade-up">
@@ -99,135 +122,50 @@ const Dashboard = () => {
       </h1>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 animate-fade-in">
-        {/* Usage Statistics Card */}
-        <Card className="col-span-full lg:col-span-2">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Activity className="h-5 w-5" />
-              Usage Statistics
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-2 gap-4 mb-4">
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">AI Interactions</p>
-                <p className="text-2xl font-bold">1,234</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground">Tokens Used</p>
-                <p className="text-2xl font-bold">45.6K</p>
-              </div>
-            </div>
-            <div className="h-[200px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={usageData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Line
-                    type="monotone"
-                    dataKey="value"
-                    stroke="#9b87f5"
-                    strokeWidth={2}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-          </CardContent>
-        </Card>
+        <UsageStats usageData={usageData} />
 
-        {/* Settings Panel */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <CreditCard className="h-5 w-5" />
-              Subscription
+              <Database className="h-5 w-5" />
+              Your Agents
             </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Current Plan</span>
-              <span className="text-sm font-medium">Free Plan</span>
-            </div>
-            <Button className="w-full" variant="outline">
-              Change Plan
-            </Button>
-            <Button className="w-full" variant="outline">
-              Manage AI Agent
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Agent Status Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Bot className="h-5 w-5" />
-              Agent Status
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-muted-foreground">Status</span>
-              <span
-                className={`text-sm font-medium ${
-                  isAgentActive ? "text-green-500" : "text-red-500"
-                }`}
-              >
-                {isAgentActive ? "Active" : "Inactive"}
-              </span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-sm">Toggle Agent</span>
-              <Switch
-                checked={isAgentActive}
-                onCheckedChange={setIsAgentActive}
-              />
-            </div>
-            <Progress value={isAgentActive ? 100 : 0} />
-          </CardContent>
-        </Card>
-
-        {/* Quick Actions Card */}
-        <Card className="col-span-full lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-2">
-            <Button
-              variant="outline"
-              className="h-24 flex flex-col items-center justify-center gap-2"
-              onClick={() => navigate("/test-agent")}
-            >
-              <Play className="h-6 w-6" />
-              Test AI Agent
-            </Button>
-            <Button
-              variant="outline"
-              className="h-24 flex flex-col items-center justify-center gap-2"
-              onClick={() => navigate("/add-data")}
-            >
-              <Upload className="h-6 w-6" />
-              Add Data
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Support Card */}
-        <Card
-          className="hover:bg-accent/50 transition-colors cursor-pointer"
-          onClick={() => navigate("/support")}
-        >
-          <CardHeader>
-            <CardTitle>Support</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
-              Need help? Check out our FAQs or contact support.
-            </p>
+            <AgentsList
+              agents={agents}
+              onToggleStatus={handleToggleStatus}
+              onEdit={(id) => navigate(`/agents/${id}/edit`)}
+              onDelete={async (id) => {
+                const { error } = await supabase
+                  .from("agents")
+                  .delete()
+                  .eq("id", id);
+
+                if (error) {
+                  toast({
+                    title: "Error",
+                    description: "Failed to delete agent",
+                    variant: "destructive",
+                  });
+                } else {
+                  fetchAgents();
+                }
+              }}
+            />
+            <Button
+              className="w-full mt-4"
+              onClick={() => setShowOnboarding(true)}
+            >
+              Create New Agent
+            </Button>
           </CardContent>
         </Card>
+
+        <QuickActions
+          onTestAgent={() => navigate("/test-agent")}
+          onAddData={() => navigate("/add-data")}
+        />
       </div>
       <OnboardingWizard open={showOnboarding} onClose={handleCloseOnboarding} />
     </div>
