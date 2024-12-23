@@ -1,4 +1,5 @@
 import { Bot, Target, Settings, Wand2 } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 export const steps = [
   {
