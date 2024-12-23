@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { AgentTypeSelector } from "../agent-setup/AgentTypeSelector";
 import { TaskDefinitionForm } from "../agent-setup/TaskDefinitionForm";
 import { AgentSettings } from "../agent-setup/AgentSettings";
@@ -59,7 +58,10 @@ export function OnboardingWizard({ open, onClose }: OnboardingWizardProps) {
         });
 
         onClose();
-        navigate("/dashboard");
+        // Force navigation to dashboard after a short delay to ensure state updates
+        setTimeout(() => {
+          navigate("/dashboard", { replace: true });
+        }, 100);
       } catch (error) {
         console.error("Error creating agent:", error);
         toast({
@@ -127,7 +129,10 @@ export function OnboardingWizard({ open, onClose }: OnboardingWizardProps) {
         <div className="mt-6">
           {renderStepContent()}
           <div className="flex justify-between mt-6">
-            <Button variant="outline" onClick={onClose}>
+            <Button variant="outline" onClick={() => {
+              onClose();
+              navigate("/dashboard", { replace: true });
+            }}>
               Skip Setup for Now
             </Button>
             {currentStep === steps.length - 1 ? (
