@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { webhookService } from "@/services/webhookService";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Agent {
   id: string;
@@ -22,10 +23,14 @@ export function AgentsList({ agents, onToggleStatus, onEdit, onDelete }: AgentsL
   const { toast } = useToast();
 
   const handleToggleStatus = async (id: string, checked: boolean) => {
+    const agent = agents.find(a => a.id === id);
+    if (!agent) return;
+
     try {
       await webhookService.notifyAgentAction(
         checked ? 'update' : 'deactivate',
         id,
+        agent.name,
         { status: checked ? 'active' : 'inactive' }
       );
       onToggleStatus(id, checked);
@@ -40,8 +45,11 @@ export function AgentsList({ agents, onToggleStatus, onEdit, onDelete }: AgentsL
   };
 
   const handleDelete = async (id: string) => {
+    const agent = agents.find(a => a.id === id);
+    if (!agent) return;
+
     try {
-      await webhookService.notifyAgentAction('delete', id);
+      await webhookService.notifyAgentAction('delete', id, agent.name);
       onDelete(id);
     } catch (error) {
       console.error('Failed to notify webhook:', error);
