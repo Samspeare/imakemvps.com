@@ -1,11 +1,14 @@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { webhookService } from "@/services/webhookService";
+import { useToast } from "@/components/ui/use-toast";
 
 interface Agent {
   id: string;
   name: string;
   status: string;
+  settings?: any;
 }
 
 interface AgentsListProps {
@@ -16,6 +19,40 @@ interface AgentsListProps {
 }
 
 export function AgentsList({ agents, onToggleStatus, onEdit, onDelete }: AgentsListProps) {
+  const { toast } = useToast();
+
+  const handleToggleStatus = async (id: string, checked: boolean) => {
+    try {
+      await webhookService.notifyAgentAction(
+        checked ? 'update' : 'deactivate',
+        id,
+        { status: checked ? 'active' : 'inactive' }
+      );
+      onToggleStatus(id, checked);
+    } catch (error) {
+      console.error('Failed to notify webhook:', error);
+      toast({
+        title: "Warning",
+        description: "Status updated, but notification system encountered an error.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await webhookService.notifyAgentAction('delete', id);
+      onDelete(id);
+    } catch (error) {
+      console.error('Failed to notify webhook:', error);
+      toast({
+        title: "Warning",
+        description: "Agent deleted, but notification system encountered an error.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Table>
       <TableHeader>
@@ -32,7 +69,7 @@ export function AgentsList({ agents, onToggleStatus, onEdit, onDelete }: AgentsL
             <TableCell>
               <Switch
                 checked={agent.status === "active"}
-                onCheckedChange={(checked) => onToggleStatus(agent.id, checked)}
+                onCheckedChange={(checked) => handleToggleStatus(agent.id, checked)}
               />
             </TableCell>
             <TableCell className="space-x-2">
@@ -42,7 +79,7 @@ export function AgentsList({ agents, onToggleStatus, onEdit, onDelete }: AgentsL
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => onDelete(agent.id)}
+                onClick={() => handleDelete(agent.id)}
               >
                 Delete
               </Button>

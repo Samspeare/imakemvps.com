@@ -15,6 +15,7 @@ import { AgentSettings } from "../agent-setup/AgentSettings";
 import { useToast } from "@/components/ui/use-toast";
 import { StepIndicator, steps } from "./StepIndicator";
 import { ReviewStep } from "./ReviewStep";
+import { webhookService } from "@/services/webhookService";
 
 interface OnboardingWizardProps {
   open: boolean;
@@ -39,18 +40,39 @@ export function OnboardingWizard({ open, onClose }: OnboardingWizardProps) {
         
         if (!user) throw new Error("No user found");
 
-        const { error } = await supabase.from("agents").insert({
+        const agentName = "Inbox Label Handler";
+        const combinedSettings = {
+          ...taskConfig,
+          ...settings,
+        };
+
+        const { error, data: agent } = await supabase.from("agents").insert({
           user_id: user.id,
-          name: "Inbox Label Handler",
+          name: agentName,
           type: agentType,
-          settings: {
-            ...taskConfig,
-            ...settings,
-          },
+          settings: combinedSettings,
           status: "active",
-        });
+        }).select().single();
 
         if (error) throw error;
+
+        // Notify webhook about agent creation
+        try {
+          await webhookService.notifyAgentCreation(
+            agentName,
+            agentType,
+            combinedSettings,
+            user.id
+          );
+        } catch (webhookError) {
+          console.error("Webhook notification failed:", webhookError);
+          // We don't throw here to avoid blocking the user flow
+          toast({
+            title: "Warning",
+            description: "Agent created successfully, but notification system encountered an error.",
+            variant: "destructive",
+          });
+        }
 
         toast({
           title: "Success!",
