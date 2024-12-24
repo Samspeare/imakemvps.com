@@ -26,6 +26,7 @@ const BlogPostEditor = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
 
   const form = useForm<BlogPostFormData>({
     defaultValues: {
@@ -35,14 +36,37 @@ const BlogPostEditor = () => {
     },
   });
 
+  // Get the current user when component mounts
+  useState(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+    });
+  }, []);
+
   const onSubmit = async (data: BlogPostFormData) => {
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to create or edit blog posts",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
+    const postData = {
+      ...data,
+      author_id: user.id,
+    };
+
     const { error } = id
       ? await supabase
           .from("blog_posts")
-          .update(data)
+          .update(postData)
           .eq("id", id)
-      : await supabase.from("blog_posts").insert([data]);
+      : await supabase
+          .from("blog_posts")
+          .insert([postData]);
 
     setLoading(false);
 
