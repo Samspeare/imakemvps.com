@@ -5,6 +5,8 @@ import Dashboard from "./pages/Dashboard";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Blog from "./pages/Blog";
+import AdminBlog from "./pages/AdminBlog";
+import BlogPostEditor from "./components/blog/BlogPostEditor";
 import Contact from "./pages/Contact";
 import { EditAgentForm } from "./components/agent-setup/EditAgentForm";
 import { Toaster } from "./components/ui/toaster";
@@ -26,6 +28,30 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/blog"
+              element={
+                <ProtectedRoute>
+                  <AdminBlog />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/blog/new"
+              element={
+                <ProtectedRoute>
+                  <BlogPostEditor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/blog/:id/edit"
+              element={
+                <ProtectedRoute>
+                  <BlogPostEditor />
                 </ProtectedRoute>
               }
             />

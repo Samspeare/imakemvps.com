@@ -1,26 +1,40 @@
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
+import { format } from "date-fns";
+import { useToast } from "@/components/ui/use-toast";
+
+interface BlogPost {
+  id: string;
+  title: string;
+  excerpt: string | null;
+  published_at: string;
+}
 
 const Blog = () => {
-  const posts = [
-    {
-      title: "The Future of AI in MVP Development",
-      excerpt: "Explore how artificial intelligence is revolutionizing the way we build and validate MVPs.",
-      date: "2024-02-20",
-      readTime: "5 min read",
-    },
-    {
-      title: "Building Scalable MVPs",
-      excerpt: "Learn the best practices for creating MVPs that can grow with your business.",
-      date: "2024-02-15",
-      readTime: "4 min read",
-    },
-    {
-      title: "From Idea to MVP in 4 Weeks",
-      excerpt: "A step-by-step guide to rapidly developing your minimum viable product.",
-      date: "2024-02-10",
-      readTime: "6 min read",
-    },
-  ];
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const { data, error } = await supabase
+        .from("blog_posts")
+        .select("*")
+        .order("published_at", { ascending: false });
+
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to fetch blog posts",
+          variant: "destructive",
+        });
+      } else {
+        setPosts(data || []);
+      }
+    };
+
+    fetchPosts();
+  }, [toast]);
 
   return (
     <div className="min-h-screen pt-24">
@@ -35,7 +49,7 @@ const Blog = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post, index) => (
             <motion.article
-              key={index}
+              key={post.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
@@ -43,9 +57,9 @@ const Blog = () => {
             >
               <div className="p-6">
                 <div className="flex items-center space-x-2 text-sm text-gray-500 mb-3">
-                  <span>{post.date}</span>
-                  <span>•</span>
-                  <span>{post.readTime}</span>
+                  <span>
+                    {format(new Date(post.published_at), "MMMM d, yyyy")}
+                  </span>
                 </div>
                 <h2 className="text-xl font-semibold text-gray-900 mb-2">
                   {post.title}
