@@ -25,8 +25,8 @@ const Blog = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const [selectedTag, setSelectedTag] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [selectedTag, setSelectedTag] = useState<string>("all");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -39,11 +39,11 @@ const Blog = () => {
       .select("*")
       .order("published_at", { ascending: false });
 
-    if (selectedCategory) {
+    if (selectedCategory && selectedCategory !== "all") {
       query = query.contains("categories", [selectedCategory]);
     }
 
-    if (selectedTag) {
+    if (selectedTag && selectedTag !== "all") {
       query = query.contains("tags", [selectedTag]);
     }
 
@@ -90,7 +90,7 @@ const Blog = () => {
                 <SelectValue placeholder="Filter by category" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Categories</SelectItem>
+                <SelectItem value="all">All Categories</SelectItem>
                 {categories.map((category) => (
                   <SelectItem key={category} value={category}>
                     {category}
@@ -107,7 +107,7 @@ const Blog = () => {
                 <SelectValue placeholder="Filter by tag" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Tags</SelectItem>
+                <SelectItem value="all">All Tags</SelectItem>
                 {tags.map((tag) => (
                   <SelectItem key={tag} value={tag}>
                     {tag}
