@@ -8,6 +8,13 @@ const corsHeaders = {
 
 const WEBHOOK_SECRET = Deno.env.get('WEBHOOK_SECRET')
 
+interface BlogPost {
+  title: string;
+  content: string;
+  excerpt?: string;
+  published_at?: string;
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -20,7 +27,10 @@ serve(async (req) => {
     if (!authHeader || authHeader !== `Bearer ${WEBHOOK_SECRET}`) {
       console.error('Unauthorized request: Invalid webhook secret')
       return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
+        JSON.stringify({ 
+          error: 'Unauthorized', 
+          message: 'Invalid or missing webhook secret'
+        }),
         { 
           status: 401,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -28,17 +38,38 @@ serve(async (req) => {
       )
     }
 
+    // Initialize Supabase client
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    const { title, content, excerpt } = await req.json()
+    // Parse and validate request body
+    const requestData: BlogPost = await req.json()
+    console.log('Received blog post data:', requestData)
 
-    if (!title || !content) {
-      console.error('Missing required fields')
+    // Validate required fields
+    if (!requestData.title?.trim()) {
+      console.error('Missing or empty title field')
       return new Response(
-        JSON.stringify({ error: 'Missing required fields' }),
+        JSON.stringify({ 
+          error: 'Validation Error', 
+          message: 'Title is required and cannot be empty' 
+        }),
+        { 
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    if (!requestData.content?.trim()) {
+      console.error('Missing or empty content field')
+      return new Response(
+        JSON.stringify({ 
+          error: 'Validation Error', 
+          message: 'Content is required and cannot be empty' 
+        }),
         { 
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -56,7 +87,10 @@ serve(async (req) => {
     if (userError || !adminUser) {
       console.error('Error finding admin user:', userError)
       return new Response(
-        JSON.stringify({ error: 'Admin user not found' }),
+        JSON.stringify({ 
+          error: 'Server Error', 
+          message: 'Could not find admin user' 
+        }),
         { 
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -64,25 +98,30 @@ serve(async (req) => {
       )
     }
 
+    // Prepare blog post data with defaults
+    const blogPostData = {
+      title: requestData.title.trim(),
+      content: requestData.content.trim(),
+      excerpt: requestData.excerpt?.trim() || null,
+      published_at: requestData.published_at || new Date().toISOString(),
+      author_id: adminUser.id
+    }
+
     // Create the blog post
     const { data, error } = await supabaseClient
       .from('blog_posts')
-      .insert([
-        {
-          title,
-          content,
-          excerpt: excerpt || null,
-          author_id: adminUser.id,
-          published_at: new Date().toISOString()
-        }
-      ])
+      .insert([blogPostData])
       .select()
       .single()
 
     if (error) {
       console.error('Error creating blog post:', error)
       return new Response(
-        JSON.stringify({ error: 'Failed to create blog post' }),
+        JSON.stringify({ 
+          error: 'Database Error', 
+          message: 'Failed to create blog post',
+          details: error.message 
+        }),
         { 
           status: 500,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -93,15 +132,23 @@ serve(async (req) => {
     console.log('Successfully created blog post:', data)
 
     return new Response(
-      JSON.stringify({ success: true, data }),
+      JSON.stringify({ 
+        success: true, 
+        data,
+        message: 'Blog post created successfully' 
+      }),
       { 
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
     )
   } catch (error) {
-    console.error('Error:', error)
+    console.error('Unexpected error:', error)
     return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
+      JSON.stringify({ 
+        error: 'Server Error', 
+        message: 'An unexpected error occurred',
+        details: error.message 
+      }),
       { 
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
