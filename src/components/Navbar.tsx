@@ -48,11 +48,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center space-x-2">
-            <span className="text-xl font-semibold text-primary">I Make MVPs</span>
+            <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
+              I Make MVPs
+            </span>
           </Link>
           
           <div className="hidden sm:flex sm:items-center sm:space-x-8">
@@ -60,7 +62,7 @@ const Navbar = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="relative px-3 py-2 text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+                className="relative px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary transition-colors"
               >
                 {link.label}
                 {location.pathname === link.to && (
@@ -88,8 +90,8 @@ const Navbar = () => {
               </Button>
             ) : (
               <Link to="/auth">
-                <Button variant="default" className="text-sm font-medium">
-                  Sign In
+                <Button variant="default" className="text-sm font-medium rounded-full px-8">
+                  Try for free!
                 </Button>
               </Link>
             )}
