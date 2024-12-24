@@ -18,6 +18,7 @@ serve(async (req) => {
     // Verify webhook secret
     const authHeader = req.headers.get('authorization')
     if (!authHeader || authHeader !== `Bearer ${WEBHOOK_SECRET}`) {
+      console.error('Unauthorized request: Invalid webhook secret')
       return new Response(
         JSON.stringify({ error: 'Unauthorized' }),
         { 
@@ -35,6 +36,7 @@ serve(async (req) => {
     const { title, content, excerpt } = await req.json()
 
     if (!title || !content) {
+      console.error('Missing required fields')
       return new Response(
         JSON.stringify({ error: 'Missing required fields' }),
         { 
