@@ -53,11 +53,14 @@ const Navbar = () => {
     }
   };
 
+  const isAdmin = user?.email === "sam@imakemvps.com";
+
   const links = [
     { to: "/", label: "Home" },
     { to: "/blog", label: "Blog" },
     { to: "/contact", label: "Contact" },
     ...(user ? [{ to: "/dashboard", label: "Dashboard" }] : []),
+    ...(isAdmin ? [{ to: "/admin/blog", label: "Manage Blog" }] : []),
   ];
 
   return (
