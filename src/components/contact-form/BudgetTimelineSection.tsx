@@ -23,13 +23,14 @@ export const BudgetTimelineSection = ({
         <div>
           <Label htmlFor="budgetRange">Estimated Budget Range</Label>
           <Select
-            value={formData.budgetRange}
+            value={formData.budgetRange || "free-consult"}
             onValueChange={(value) => setFormData({ ...formData, budgetRange: value })}
           >
             <SelectTrigger>
               <SelectValue placeholder="Select budget range" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value="free-consult">Free Discovery Consult</SelectItem>
               <SelectItem value="5k-10k">$5,000 - $10,000</SelectItem>
               <SelectItem value="10k-25k">$10,000 - $25,000</SelectItem>
               <SelectItem value="25k-50k">$25,000 - $50,000</SelectItem>
