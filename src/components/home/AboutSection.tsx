@@ -16,7 +16,7 @@ export const AboutSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-6"
+            className="space-y-6 lg:px-8 text-center lg:text-left"
           >
             <h3 className="text-xl text-primary font-semibold tracking-wide uppercase">
               About Me
@@ -56,7 +56,7 @@ export const AboutSection = () => {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative"
+            className="relative lg:px-8"
           >
             <img
               src="/lovable-uploads/b16aee30-907d-45ca-8374-e544613306dd.png"
