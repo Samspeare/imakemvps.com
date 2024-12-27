@@ -1,11 +1,8 @@
 import { motion } from "framer-motion";
-import { AlertOctagon, Check, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { ArrowRight, MessageSquare, Check, AlertOctagon } from "lucide-react";
 
 export const ProblemSolutionSection = () => {
-  const navigate = useNavigate();
-
   const problems = [
     "Struggling to manage repetitive tasks?",
     "Need better tools for studying or business automation?",
@@ -43,13 +40,32 @@ export const ProblemSolutionSection = () => {
 
           {/* Text Content */}
           <div className="w-full md:w-2/3 text-left pl-0">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">How I Can Help You</h2>
+            <h3 className="text-xl text-primary font-semibold tracking-wide uppercase text-left pl-0">
+              Your AI Partner
+            </h3>
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">How I Can Help You</h2>
             <p className="text-gray-600 max-w-3xl">
               Not sure where to start or what AI can do for you? Let's just have a conversation. 
               We can chat about your goals, challenges, or ideas, and I'll share some friendly advice 
-              or possibilities you might not have thought of—no strings attached. You can take what 
-              we discuss and run with it, or we can explore working together to bring those ideas to life.
+              or possibilities you might not have thought of—no strings attached.
             </p>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="mt-6"
+            >
+              <Link to="/contact">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors group"
+                >
+                  Start a Conversation
+                  <MessageSquare className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </motion.button>
+              </Link>
+            </motion.div>
           </div>
         </motion.div>
 
@@ -107,13 +123,16 @@ export const ProblemSolutionSection = () => {
           transition={{ duration: 0.5, delay: 0.6 }}
           className="flex justify-center"
         >
-          <Button
-            onClick={() => navigate("/contact")}
-            className="group flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg transition-all duration-300"
-          >
-            Schedule A Consultation
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-          </Button>
+          <Link to="/contact">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="group flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full transition-all duration-300"
+            >
+              Schedule A Consultation
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>

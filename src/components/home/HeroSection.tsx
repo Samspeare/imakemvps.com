@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ArrowRight, Sparkles } from "lucide-react";
 
-export const HeroSection = () => {
+const HeroSection = () => {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Magical gradient background */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-accent via-background to-accent/50"
@@ -29,22 +30,31 @@ export const HeroSection = () => {
           transition={{ duration: 0.8 }}
           className="space-y-8"
         >
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-purple-100 rounded-full px-4 py-2"
+          >
+            <Sparkles className="w-4 h-4 text-primary" />
+            <span className="text-sm font-medium text-gray-600">AI-Powered Solutions</span>
+          </motion.div>
+
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight"
+            className="magical-text-gradient text-5xl sm:text-6xl font-bold mb-6 tracking-tight"
           >
-            <span className="magical-text-gradient">
-              Empowering Businesses and Individuals with AI-Powered Solutions
-            </span>
+            Empowering Businesses and <br className="hidden sm:block" />
+            Individuals with AI-Powered Solutions
           </motion.h1>
           
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="max-w-3xl mx-auto text-xl sm:text-2xl text-muted-foreground leading-relaxed"
+            className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
             MVP (Minimum Valuable Product) is about creating the simplest version of your product
             that delivers real value to users while minimizing development time and costs.
@@ -54,7 +64,7 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
-            className="flex justify-center items-center"
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
             <Link to="/use-cases">
               <div className="relative p-[2px] overflow-hidden rounded-full group">
@@ -68,9 +78,18 @@ export const HeroSection = () => {
                 </motion.button>
               </div>
             </Link>
+            <Link 
+              to="/contact" 
+              className="text-gray-600 hover:text-primary transition-colors flex items-center gap-2 group"
+            >
+              Schedule a Call
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            </Link>
           </motion.div>
         </motion.div>
       </div>
     </section>
   );
 };
+
+export default HeroSection;
