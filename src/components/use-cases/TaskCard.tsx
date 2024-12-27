@@ -2,7 +2,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-import ModelTiers from "./ModelTiers";
 
 interface TaskDetails {
   task: string;
@@ -79,7 +78,6 @@ const TaskCard = ({ title, description, icon, agentIcon, details, index }: TaskC
                 ))}
               </ul>
             </div>
-            <ModelTiers />
           </div>
         </DialogContent>
       </Dialog>
