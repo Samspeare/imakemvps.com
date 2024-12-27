@@ -53,6 +53,7 @@ export const ProblemSolutionSection = () => {
           </div>
         </motion.div>
 
+        {/* Problems and Solutions Grid */}
         <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
           {/* Problems Column */}
           <motion.div
