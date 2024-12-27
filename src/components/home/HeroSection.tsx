@@ -57,22 +57,28 @@ export const HeroSection = () => {
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
             <Link to="/use-cases">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 rounded-full bg-primary text-white font-medium text-lg hover:bg-primary-dark transition-colors duration-200 shadow-lg shadow-primary/20 magical-border-gradient"
-              >
-                Explore Use Cases
-              </motion.button>
+              <div className="relative p-[2px] overflow-hidden rounded-full group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto]"></div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative px-8 py-4 rounded-full bg-background text-primary hover:text-primary-dark font-medium text-lg transition-colors duration-200"
+                >
+                  Explore Use Cases
+                </motion.button>
+              </div>
             </Link>
             <Link to="/contact">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 rounded-full bg-secondary text-secondary-foreground font-medium text-lg hover:bg-secondary-dark transition-colors duration-200 shadow-lg shadow-secondary/20"
-              >
-                Schedule a Consult
-              </motion.button>
+              <div className="relative p-[2px] overflow-hidden rounded-full group">
+                <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto]"></div>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative px-8 py-4 rounded-full bg-background text-primary hover:text-primary-dark font-medium text-lg transition-colors duration-200"
+                >
+                  Schedule a Consult
+                </motion.button>
+              </div>
             </Link>
           </motion.div>
         </motion.div>
