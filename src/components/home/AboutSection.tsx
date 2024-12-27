@@ -18,7 +18,7 @@ export const AboutSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-6 lg:px-8 text-center"
           >
-            <h3 className="text-xl text-primary font-semibold tracking-wide uppercase">
+            <h3 className="text-xl text-primary font-semibold tracking-wide uppercase text-left pl-0">
               About Me
             </h3>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
