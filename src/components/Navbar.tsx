@@ -69,7 +69,7 @@ const Navbar = () => {
         backgroundColor,
         boxShadow,
       }}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md sticky"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
@@ -130,9 +130,9 @@ const Navbar = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <Link to="/auth">
+                <Link to="/contact">
                   <Button variant="default" className="text-sm font-medium rounded-full px-8">
-                    Try for free!
+                    Schedule A Consult
                   </Button>
                 </Link>
               </motion.div>
