@@ -25,15 +25,32 @@ export const ProblemSolutionSection = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="flex flex-col md:flex-row items-center gap-8 mb-12"
         >
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">How I Can Help You</h2>
-          <p className="text-gray-600 max-w-3xl mx-auto">
-            Not sure where to start or what AI can do for you? Let's just have a conversation. 
-            We can chat about your goals, challenges, or ideas, and I'll share some friendly advice 
-            or possibilities you might not have thought of—no strings attached. You can take what 
-            we discuss and run with it, or we can explore working together to bring those ideas to life.
-          </p>
+          {/* AI Wizard Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="w-full md:w-1/3"
+          >
+            <img
+              src="/lovable-uploads/0c667512-22b2-4b8a-8409-506771f81249.png"
+              alt="AI Wizard"
+              className="w-full max-w-md mx-auto rounded-lg shadow-xl"
+            />
+          </motion.div>
+
+          {/* Text Content */}
+          <div className="w-full md:w-2/3 text-center md:text-left">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">How I Can Help You</h2>
+            <p className="text-gray-600 max-w-3xl">
+              Not sure where to start or what AI can do for you? Let's just have a conversation. 
+              We can chat about your goals, challenges, or ideas, and I'll share some friendly advice 
+              or possibilities you might not have thought of—no strings attached. You can take what 
+              we discuss and run with it, or we can explore working together to bring those ideas to life.
+            </p>
+          </div>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
