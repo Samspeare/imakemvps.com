@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const AboutSection = () => {
   return (
-    <section className="relative pt-32 pb-16 px-4 bg-gradient-to-b from-white to-purple-50">
+    <section className="relative py-16 px-4 bg-gradient-to-b from-white to-purple-50">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -30,7 +30,7 @@ export const AboutSection = () => {
             <p className="text-xl text-gray-600">
               I Make MVPs is building the future of work, where every interaction is improved with Artificial Intelligence and Agentic Designs.
             </p>
-            <blockquote className="border-l-4 border-primary pl-4 italic text-gray-700 my-6">
+            <blockquote className="border-l-4 border-primary pl-4 italic text-gray-700 my-4">
               "Any sufficiently advanced technology is indistinguishable from magic." – Arthur C. Clarke, Profiles of the Future: An Inquiry into the Limits of the Possible.
             </blockquote>
             <p className="text-lg text-gray-600">
@@ -39,7 +39,7 @@ export const AboutSection = () => {
             <p className="text-lg text-gray-600">
               Peeking behind the curtain, I didn't find mystery—I found opportunity. AI isn't just technology; it's the magic of possibility, waiting to be explored.
             </p>
-            <div className="mt-8">
+            <div className="mt-6">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}

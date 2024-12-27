@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const HeroSection = () => {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
       {/* Gradient background with subtle animation */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-purple-100"
@@ -19,12 +19,12 @@ export const HeroSection = () => {
       />
       
       {/* Content */}
-      <div className="relative max-w-7xl mx-auto px-4 py-24 sm:px-6 lg:px-8 text-center">
+      <div className="relative max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="space-y-8"
+          className="space-y-6"
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
