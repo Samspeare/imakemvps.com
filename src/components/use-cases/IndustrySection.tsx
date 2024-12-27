@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, BookOpen, Robot, Calendar, MessageSquare, BarChart3, UserPlus, Bot } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, MessageSquare, BarChart3, UserPlus, Bot } from "lucide-react";
 
 const tasks = [
   {
