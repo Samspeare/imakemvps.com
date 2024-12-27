@@ -1,76 +1,106 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, BookOpen, Calendar, MessageSquare, BarChart3, UserPlus, Bot } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const tasks = [
   {
     title: "Personal Study Assistance",
     description: "AI-powered study tools that adapt to your learning style and schedule, tracking progress and providing personalized recommendations.",
     icon: <BookOpen className="h-6 w-6 text-primary" />,
+    category: "Personal Productivity",
   },
   {
     title: "Content Creation Automation",
     description: "Generate engaging content and schedule posts automatically with AI-powered tools that maintain your brand voice.",
     icon: <Bot className="h-6 w-6 text-primary" />,
+    category: "Business Automation",
   },
   {
     title: "Time Management",
     description: "Optimize your daily workflow with AI that prioritizes tasks, schedules meetings, and sends smart reminders.",
     icon: <Calendar className="h-6 w-6 text-primary" />,
+    category: "Personal Productivity",
   },
   {
     title: "Customer Interaction",
     description: "Provide instant, personalized responses to customers 24/7 with intelligent chatbots and automation.",
     icon: <MessageSquare className="h-6 w-6 text-primary" />,
+    category: "Customer Engagement",
   },
   {
     title: "Data Analysis",
     description: "Transform complex data into actionable insights with AI-powered analytics and automated reporting.",
     icon: <BarChart3 className="h-6 w-6 text-primary" />,
+    category: "Data Analysis",
   },
   {
     title: "Recruitment Assistance",
     description: "Streamline your hiring process with AI that screens resumes, automates communication, and tracks candidates.",
     icon: <UserPlus className="h-6 w-6 text-primary" />,
+    category: "Business Automation",
   },
+];
+
+const categories = [
+  "Personal Productivity",
+  "Business Automation",
+  "Data Analysis",
+  "Customer Engagement",
 ];
 
 const IndustrySection = () => {
   return (
-    <section className="py-24 px-4 bg-white">
+    <section className="py-24 px-4">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">Tasks We Simplify</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tasks.map((task, index) => (
-            <motion.div
-              key={task.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ 
-                scale: 1.05,
-                boxShadow: "0 10px 30px -15px rgba(0, 0, 0, 0.2)"
-              }}
-              className="p-6 rounded-2xl bg-gray-50 transform transition-all duration-300"
-            >
-              <div className="flex items-start space-x-4">
-                <div className="p-3 rounded-lg bg-primary/10">
-                  {task.icon}
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold mb-2">{task.title}</h3>
-                  <p className="text-gray-600 mb-4">{task.description}</p>
-                  <Link 
-                    to="/contact" 
-                    className="inline-flex items-center text-primary hover:text-primary-dark"
+        <h2 className="text-4xl font-bold text-center mb-4">Tasks We Simplify</h2>
+        <p className="text-lg text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          Discover how our AI solutions can help you tackle everyday challenges and boost your productivity.
+        </p>
+        
+        {categories.map((category, categoryIndex) => {
+          const categoryTasks = tasks.filter(task => task.category === category);
+          if (categoryTasks.length === 0) return null;
+          
+          return (
+            <div key={category} className={`mb-16 ${categoryIndex % 2 === 0 ? 'bg-background' : 'bg-muted/30'} py-12 rounded-lg`}>
+              <h3 className="text-2xl font-semibold mb-8 text-center">{category}</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
+                {categoryTasks.map((task, index) => (
+                  <motion.div
+                    key={task.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    viewport={{ once: true }}
                   >
-                    Learn More <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </div>
+                    <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                      <CardHeader>
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="p-3 rounded-lg bg-primary/10">
+                            {task.icon}
+                          </div>
+                          <CardTitle className="text-xl">{task.title}</CardTitle>
+                        </div>
+                      </CardHeader>
+                      <CardContent>
+                        <CardDescription className="text-base mb-4">
+                          {task.description}
+                        </CardDescription>
+                        <Link 
+                          to="/contact" 
+                          className="inline-flex items-center text-primary hover:text-primary-dark transition-colors"
+                        >
+                          Learn More <ArrowRight className="ml-1 h-4 w-4" />
+                        </Link>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
               </div>
-            </motion.div>
-          ))}
-        </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
