@@ -53,17 +53,26 @@ const IndustrySection = () => {
   return (
     <section className="py-24 px-4">
       <div className="max-w-7xl mx-auto">
-        <h2 className="text-4xl font-bold text-center mb-4">Tasks We Simplify</h2>
-        <p className="text-lg text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Discover how our AI solutions can help you tackle everyday challenges and boost your productivity.
-        </p>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark">
+            Tasks We Simplify
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Discover how our AI solutions can help you tackle everyday challenges and boost your productivity.
+          </p>
+        </div>
         
         {categories.map((category, categoryIndex) => {
           const categoryTasks = tasks.filter(task => task.category === category);
           if (categoryTasks.length === 0) return null;
           
           return (
-            <div key={category} className={`mb-16 ${categoryIndex % 2 === 0 ? 'bg-background' : 'bg-muted/30'} py-12 rounded-lg`}>
+            <div 
+              key={category} 
+              className={`mb-16 ${
+                categoryIndex % 2 === 0 ? 'bg-background' : 'bg-purple-50'
+              } py-12 rounded-2xl`}
+            >
               <h3 className="text-2xl font-semibold mb-8 text-center">{category}</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4">
                 {categoryTasks.map((task, index) => (
@@ -74,7 +83,7 @@ const IndustrySection = () => {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     viewport={{ once: true }}
                   >
-                    <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <Card className="h-full transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-purple-100/50">
                       <CardHeader>
                         <div className="flex items-center gap-4 mb-4">
                           <div className="p-3 rounded-lg bg-primary/10">
@@ -84,14 +93,15 @@ const IndustrySection = () => {
                         </div>
                       </CardHeader>
                       <CardContent>
-                        <CardDescription className="text-base mb-4">
+                        <CardDescription className="text-base mb-6">
                           {task.description}
                         </CardDescription>
                         <Link 
                           to="/contact" 
-                          className="inline-flex items-center text-primary hover:text-primary-dark transition-colors"
+                          className="inline-flex items-center text-primary hover:text-primary-dark transition-colors group"
                         >
-                          Learn More <ArrowRight className="ml-1 h-4 w-4" />
+                          Learn More 
+                          <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                         </Link>
                       </CardContent>
                     </Card>
