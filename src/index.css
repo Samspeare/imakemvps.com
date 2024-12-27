@@ -74,12 +74,66 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  h1 {
+    @apply text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl font-bold tracking-tight sm:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl font-bold tracking-tight sm:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl font-semibold tracking-tight;
+  }
+
+  p {
+    @apply leading-relaxed text-muted-foreground;
+  }
 }
 
-.magical-text-gradient {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto];
-}
+@layer components {
+  .magical-text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto];
+  }
 
-.magical-border-gradient {
-  @apply border-2 border-transparent bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto] bg-clip-border;
+  .magical-border-gradient {
+    @apply border-2 border-transparent bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto] bg-clip-border;
+  }
+
+  .section-padding {
+    @apply py-16 px-4 sm:py-24 sm:px-6 lg:px-8;
+  }
+
+  .container-width {
+    @apply max-w-7xl mx-auto;
+  }
+
+  .card-shadow {
+    @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
+  }
+
+  .button-base {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background;
+  }
+
+  .button-primary {
+    @apply button-base bg-primary text-primary-foreground hover:bg-primary-dark;
+  }
+
+  .button-secondary {
+    @apply button-base bg-secondary text-secondary-foreground hover:bg-secondary-dark;
+  }
+
+  .button-ghost {
+    @apply button-base hover:bg-accent hover:text-accent-foreground;
+  }
+
+  .input-base {
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
 }

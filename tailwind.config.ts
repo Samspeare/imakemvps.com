@@ -25,24 +25,36 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#1E88E5", // Bright blue from the character
-          light: "#64B5F6", // Lighter blue for hover states
-          dark: "#1565C0", // Darker blue for active states
+          DEFAULT: "#1E88E5", // Main brand color
+          light: "#64B5F6",
+          dark: "#1565C0",
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#FFB74D", // Gold accent from the character
-          light: "#FFD54F", // Lighter gold for hover states
-          dark: "#FFA000", // Darker gold for active states
+          DEFAULT: "#FFB74D", // Accent color
+          light: "#FFD54F",
+          dark: "#FFA000",
           foreground: "#000000",
         },
         accent: {
-          DEFAULT: "#E3F2FD", // Very light blue for backgrounds
+          DEFAULT: "#E3F2FD", // Light background accent
           foreground: "#1E88E5",
         },
         muted: {
           DEFAULT: "#F5F5F5",
           foreground: "#64748B",
+        },
+        destructive: {
+          DEFAULT: "#EF4444",
+          foreground: "#FFFFFF",
+        },
+        success: {
+          DEFAULT: "#22C55E",
+          foreground: "#FFFFFF",
+        },
+        warning: {
+          DEFAULT: "#F59E0B",
+          foreground: "#FFFFFF",
         },
       },
       borderRadius: {
