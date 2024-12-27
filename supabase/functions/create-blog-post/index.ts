@@ -6,15 +6,6 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const WEBHOOK_SECRET = Deno.env.get('WEBHOOK_SECRET')
-
-interface BlogPost {
-  title: string;
-  content: string;
-  excerpt?: string;
-  published_at?: string;
-}
-
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
@@ -22,137 +13,96 @@ serve(async (req) => {
   }
 
   try {
-    // Verify webhook secret
-    const authHeader = req.headers.get('authorization')
-    if (!authHeader || authHeader !== `Bearer ${WEBHOOK_SECRET}`) {
-      console.error('Unauthorized request: Invalid webhook secret')
+    const formData = await req.formData()
+    const title = formData.get('title')?.toString()
+    const content = formData.get('content')?.toString()
+    const excerpt = formData.get('excerpt')?.toString()
+    const image = formData.get('image') as File | null
+    
+    // Validate required fields
+    if (!title?.trim() || !content?.trim()) {
       return new Response(
-        JSON.stringify({ 
-          error: 'Unauthorized', 
-          message: 'Invalid or missing webhook secret'
-        }),
-        { 
-          status: 401,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
+        JSON.stringify({ error: 'Title and content are required' }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 }
       )
     }
 
     // Initialize Supabase client
-    const supabaseClient = createClient(
+    const supabase = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     )
 
-    // Parse and validate request body
-    const requestData: BlogPost = await req.json()
-    console.log('Received blog post data:', requestData)
+    let imageUrl = null
+    
+    // Handle image upload if present
+    if (image) {
+      const fileExt = image.name.split('.').pop()
+      const fileName = `${crypto.randomUUID()}.${fileExt}`
+      
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from('blog_images')
+        .upload(fileName, image, {
+          contentType: image.type,
+          upsert: false
+        })
 
-    // Validate required fields
-    if (!requestData.title?.trim()) {
-      console.error('Missing or empty title field')
-      return new Response(
-        JSON.stringify({ 
-          error: 'Validation Error', 
-          message: 'Title is required and cannot be empty' 
-        }),
-        { 
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      )
+      if (uploadError) {
+        console.error('Image upload error:', uploadError)
+        return new Response(
+          JSON.stringify({ error: 'Failed to upload image', details: uploadError }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
+        )
+      }
+
+      // Get the public URL for the uploaded image
+      const { data: { publicUrl } } = supabase.storage
+        .from('blog_images')
+        .getPublicUrl(fileName)
+      
+      imageUrl = publicUrl
     }
 
-    if (!requestData.content?.trim()) {
-      console.error('Missing or empty content field')
-      return new Response(
-        JSON.stringify({ 
-          error: 'Validation Error', 
-          message: 'Content is required and cannot be empty' 
-        }),
-        { 
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      )
-    }
+    // Create blog post with optional image URL in content
+    const finalContent = imageUrl 
+      ? `${content}\n\n![Blog Image](${imageUrl})`
+      : content
 
-    // Get the admin user's ID (sam@imakemvps.com)
-    const { data: adminUser, error: userError } = await supabaseClient
-      .from('auth.users')
-      .select('id')
-      .eq('email', 'sam@imakemvps.com')
-      .single()
-
-    if (userError || !adminUser) {
-      console.error('Error finding admin user:', userError)
-      return new Response(
-        JSON.stringify({ 
-          error: 'Server Error', 
-          message: 'Could not find admin user' 
-        }),
-        { 
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      )
-    }
-
-    // Prepare blog post data with defaults
-    const blogPostData = {
-      title: requestData.title.trim(),
-      content: requestData.content.trim(),
-      excerpt: requestData.excerpt?.trim() || null,
-      published_at: requestData.published_at || new Date().toISOString(),
-      author_id: adminUser.id
-    }
-
-    // Create the blog post
-    const { data, error } = await supabaseClient
+    const { data: post, error: postError } = await supabase
       .from('blog_posts')
-      .insert([blogPostData])
+      .insert([
+        {
+          title: title.trim(),
+          content: finalContent.trim(),
+          excerpt: excerpt?.trim() || null,
+          published_at: new Date().toISOString(),
+          author_id: (await supabase.auth.getUser()).data.user?.id
+        }
+      ])
       .select()
       .single()
 
-    if (error) {
-      console.error('Error creating blog post:', error)
+    if (postError) {
+      console.error('Blog post creation error:', postError)
       return new Response(
-        JSON.stringify({ 
-          error: 'Database Error', 
-          message: 'Failed to create blog post',
-          details: error.message 
-        }),
-        { 
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
+        JSON.stringify({ error: 'Failed to create blog post', details: postError }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
       )
     }
 
-    console.log('Successfully created blog post:', data)
-
     return new Response(
       JSON.stringify({ 
-        success: true, 
-        data,
-        message: 'Blog post created successfully' 
+        message: 'Blog post created successfully', 
+        post,
+        imageUrl 
       }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     )
   } catch (error) {
     console.error('Unexpected error:', error)
     return new Response(
-      JSON.stringify({ 
-        error: 'Server Error', 
-        message: 'An unexpected error occurred',
-        details: error.message 
-      }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
+      JSON.stringify({ error: 'An unexpected error occurred', details: error.message }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     )
   }
 })
