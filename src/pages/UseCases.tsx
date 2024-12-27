@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Building2, Activity, ShoppingBag, MessageSquare, BarChart3, Users } from "lucide-react";
+import { 
+  ArrowRight, Building2, Activity, ShoppingBag, 
+  MessageSquare, BarChart3, Users, 
+  Rocket, Heart, Computer, Trophy
+} from "lucide-react";
 
 const UseCases = () => {
   return (
@@ -70,21 +74,26 @@ const UseCases = () => {
         </div>
       </section>
 
-      {/* Statistics Section */}
+      {/* User Impact Section */}
       <section className="py-24 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-12">Our Proven Impact</h2>
+          <h2 className="text-3xl font-bold mb-12">Transform Your Business</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
+            {impacts.map((impact, index) => (
               <motion.div
-                key={stat.label}
+                key={impact.label}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="p-6"
               >
-                <div className="text-4xl font-bold text-primary mb-2">{stat.value}</div>
-                <div className="text-gray-600">{stat.label}</div>
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="p-3 rounded-full bg-primary/10">
+                    {impact.icon}
+                  </div>
+                  <h3 className="text-xl font-semibold text-primary">{impact.title}</h3>
+                  <p className="text-gray-600">{impact.description}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -144,23 +153,31 @@ const industries = [
   },
 ];
 
-const stats = [
+const impacts = [
   {
-    value: "85%",
-    label: "Reduction in Manual Work",
+    title: "Productivity Boosts",
+    description: "Streamline workflows and automate repetitive tasks to maximize team efficiency",
+    icon: <Rocket className="h-8 w-8 text-primary" />,
+    label: "productivity"
   },
   {
-    value: "24/7",
-    label: "Customer Support Coverage",
+    title: "Reduced Burnout",
+    description: "Eliminate manual workload and create a more balanced work environment",
+    icon: <Heart className="h-8 w-8 text-primary" />,
+    label: "wellbeing"
   },
   {
-    value: "50%",
-    label: "Faster Response Times",
+    title: "Digitization",
+    description: "Transform manual processes into seamless digital workflows",
+    icon: <Computer className="h-8 w-8 text-primary" />,
+    label: "digital"
   },
   {
-    value: "30%",
-    label: "Increase in Productivity",
-  },
+    title: "Competitive Advantages",
+    description: "Stay ahead of the curve with cutting-edge AI solutions",
+    icon: <Trophy className="h-8 w-8 text-primary" />,
+    label: "competitive"
+  }
 ];
 
 export default UseCases;
