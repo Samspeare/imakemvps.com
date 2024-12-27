@@ -93,7 +93,7 @@ export const ProblemSolutionSection = () => {
             onClick={() => navigate("/contact")}
             className="group flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg transition-all duration-300"
           >
-            Schedule a Consult
+            Schedule A Consultation
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Button>
         </motion.div>
