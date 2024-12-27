@@ -46,8 +46,8 @@ export const HeroSection = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="max-w-3xl mx-auto text-xl sm:text-2xl text-muted-foreground leading-relaxed"
           >
-            From helping friends find better ways to study, to creating tailored AI agents for businesses, 
-            my passion is solving problems with technology.
+            MVP (Minimum Valuable Product) is about creating the simplest version of your product
+            that delivers real value to users while minimizing development time and costs.
           </motion.p>
           
           <motion.div
