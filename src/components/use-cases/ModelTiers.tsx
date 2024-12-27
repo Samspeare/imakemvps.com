@@ -8,7 +8,7 @@ const ModelTiers = () => {
         <div className="space-y-2">
           <div className="aspect-square relative rounded-lg overflow-hidden">
             <img 
-              src="/lovable-uploads/bd62268b-0918-4caa-8e23-195272483eb5.png" 
+              src="/lovable-uploads/6cb48bc3-cf49-47d1-9de5-d15cd3a55a46.png" 
               alt="Base Model" 
               className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
             />
@@ -34,7 +34,7 @@ const ModelTiers = () => {
         <div className="space-y-2">
           <div className="aspect-square relative rounded-lg overflow-hidden">
             <img 
-              src="/lovable-uploads/6cb48bc3-cf49-47d1-9de5-d15cd3a55a46.png" 
+              src="/lovable-uploads/bd62268b-0918-4caa-8e23-195272483eb5.png" 
               alt="Ultra Model" 
               className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
             />
