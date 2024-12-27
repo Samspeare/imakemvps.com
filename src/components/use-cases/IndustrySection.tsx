@@ -85,6 +85,15 @@ const tasks = [
     description: "AI-powered candidate screening.",
     icon: <UserPlus className="h-4 w-4 text-primary" />,
     agentIcon: <Bot className="h-3 w-3 text-primary-light" />,
+    details: {
+      task: "Streamline hiring processes.",
+      description: "Automate resume filtering and candidate communication.",
+      solution: [
+        "Screens resumes based on job criteria.",
+        "Sends automated interview invitations.",
+        "Tracks hiring pipeline progress."
+      ]
+    }
   },
 ];
 
