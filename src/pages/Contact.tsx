@@ -161,8 +161,11 @@ const Contact = () => {
               
               {currentSection < sections.length - 1 ? (
                 <button
-                  type="button"
-                  onClick={() => setCurrentSection(currentSection + 1)}
+                  type="button" // Changed from implicit submit
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent form submission
+                    setCurrentSection(currentSection + 1);
+                  }}
                   className="ml-auto px-6 py-2 bg-primary text-white rounded-md hover:bg-primary-dark transition-colors duration-200"
                 >
                   Next
