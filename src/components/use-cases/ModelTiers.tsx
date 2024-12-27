@@ -8,7 +8,7 @@ const ModelTiers = () => {
         <div className="space-y-2">
           <div className="aspect-square relative rounded-lg overflow-hidden">
             <img 
-              src="/lovable-uploads/6cb48bc3-cf49-47d1-9de5-d15cd3a55a46.png" 
+              src="/lovable-uploads/6a070c02-2812-427c-8439-cfb954467929.png" 
               alt="Base Model" 
               className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
             />
@@ -21,7 +21,7 @@ const ModelTiers = () => {
         <div className="space-y-2">
           <div className="aspect-square relative rounded-lg overflow-hidden">
             <img 
-              src="/lovable-uploads/439e7d1c-9f40-40e9-a3ef-a4cc57d8513c.png" 
+              src="/lovable-uploads/1da7e08c-0d43-450a-88e8-1797c0407936.png" 
               alt="Advanced Model" 
               className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
             />
@@ -34,7 +34,7 @@ const ModelTiers = () => {
         <div className="space-y-2">
           <div className="aspect-square relative rounded-lg overflow-hidden">
             <img 
-              src="/lovable-uploads/bd62268b-0918-4caa-8e23-195272483eb5.png" 
+              src="/lovable-uploads/5bf029b5-9496-4b77-b7b0-8f777dae840c.png" 
               alt="Ultra Model" 
               className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
             />
