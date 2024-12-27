@@ -44,7 +44,7 @@ const tasks = [
 
 const IndustrySection = () => {
   return (
-    <section className="py-4 px-4">
+    <section className="container py-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-3">
           <h2 className="text-2xl font-bold mb-1 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-dark">
@@ -55,7 +55,7 @@ const IndustrySection = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {tasks.map((task, index) => (
             <motion.div
               key={task.title}
