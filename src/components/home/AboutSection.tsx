@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const AboutSection = () => {
   return (
-    <section className="relative py-16 px-4 bg-gradient-to-b from-white to-purple-50">
+    <section className="relative py-8 px-4 bg-gradient-to-b from-white to-purple-50">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -18,12 +18,6 @@ export const AboutSection = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-6"
           >
-            <motion.span
-              whileHover={{ scale: 1.05 }}
-              className="inline-block px-4 py-1.5 bg-purple-100 text-purple-700 rounded-full text-sm font-medium mb-4"
-            >
-              ABOUT US
-            </motion.span>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
               Building The Future of Work
             </h2>
