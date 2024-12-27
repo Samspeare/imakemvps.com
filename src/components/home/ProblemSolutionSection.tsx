@@ -42,7 +42,7 @@ export const ProblemSolutionSection = () => {
           </motion.div>
 
           {/* Text Content */}
-          <div className="w-full md:w-2/3 text-center md:text-left">
+          <div className="w-full md:w-2/3 text-left pl-0">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">How I Can Help You</h2>
             <p className="text-gray-600 max-w-3xl">
               Not sure where to start or what AI can do for you? Let's just have a conversation. 
