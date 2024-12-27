@@ -36,7 +36,7 @@ export const ProblemSolutionSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
           {/* Problems Column */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -79,23 +79,24 @@ export const ProblemSolutionSection = () => {
                 <p className="text-gray-700">{solution}</p>
               </motion.div>
             ))}
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.6 }}
-              className="flex justify-center mt-8"
-            >
-              <Button
-                onClick={() => navigate("/contact")}
-                className="group flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg transition-all duration-300"
-              >
-                Schedule a Consult
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Button>
-            </motion.div>
           </motion.div>
         </div>
+
+        {/* Centered Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="flex justify-center"
+        >
+          <Button
+            onClick={() => navigate("/contact")}
+            className="group flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg transition-all duration-300"
+          >
+            Schedule a Consult
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Button>
+        </motion.div>
       </div>
     </section>
   );
