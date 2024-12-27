@@ -4,11 +4,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const location = useLocation();
   const { toast } = useToast();
   const [user, setUser] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollY } = useScroll();
   
   const backgroundColor = useTransform(
@@ -85,6 +87,75 @@ const Navbar = () => {
             </Link>
           </motion.div>
           
+          {/* Mobile menu button */}
+          <div className="sm:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="relative z-50"
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </Button>
+          </div>
+
+          {/* Mobile menu */}
+          {isMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="absolute top-full left-0 right-0 bg-background/95 backdrop-blur-md shadow-lg sm:hidden"
+            >
+              <div className="px-4 py-4 space-y-2">
+                {links.map((link) => (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      location.pathname === link.to
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+                {user ? (
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      handleSignOut();
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full text-left text-sm font-medium hover:text-primary"
+                  >
+                    Sign Out
+                  </Button>
+                ) : (
+                  <Link
+                    to="/contact"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block"
+                  >
+                    <div className="relative p-[2px] overflow-hidden rounded-full group">
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto]"></div>
+                      <button className="relative w-full px-8 py-2 rounded-full bg-background text-primary hover:text-primary-dark font-medium text-sm transition-colors duration-200">
+                        Schedule A Consultation
+                      </button>
+                    </div>
+                  </Link>
+                )}
+              </div>
+            </motion.div>
+          )}
+          
+          {/* Desktop menu */}
           <div className="hidden sm:flex sm:items-center sm:space-x-8">
             {links.map((link) => (
               <Link
