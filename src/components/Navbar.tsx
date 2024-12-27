@@ -135,7 +135,7 @@ const Navbar = () => {
                   <div className="relative p-[2px] overflow-hidden rounded-full group">
                     <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto]"></div>
                     <button className="relative px-8 py-2 rounded-full bg-background text-primary hover:text-primary-dark font-medium text-sm transition-colors duration-200">
-                      Schedule A Consult
+                      Schedule A Consultation
                     </button>
                   </div>
                 </Link>
