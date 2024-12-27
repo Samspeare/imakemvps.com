@@ -70,6 +70,15 @@ const tasks = [
     description: "Transform data into actionable insights.",
     icon: <BarChart3 className="h-4 w-4 text-primary" />,
     agentIcon: <Bot className="h-3 w-3 text-primary-light" />,
+    details: {
+      task: "Turn raw data into actionable insights.",
+      description: "Use AI to analyze complex datasets and generate reports.",
+      solution: [
+        "Visualize trends and outliers.",
+        "Provide predictions based on historical data.",
+        "Offer automated reports with insights."
+      ]
+    }
   },
   {
     title: "Recruiter",
