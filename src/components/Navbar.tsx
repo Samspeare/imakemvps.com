@@ -57,6 +57,7 @@ const Navbar = () => {
 
   const links = [
     { to: "/", label: "Home" },
+    { to: "/use-cases", label: "Use Cases" },
     { to: "/blog", label: "Blog" },
     { to: "/contact", label: "Contact" },
     ...(user ? [{ to: "/dashboard", label: "Dashboard" }] : []),

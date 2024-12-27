@@ -8,6 +8,7 @@ import Blog from "./pages/Blog";
 import AdminBlog from "./pages/AdminBlog";
 import BlogPostEditor from "./components/blog/BlogPostEditor";
 import Contact from "./pages/Contact";
+import UseCases from "./pages/UseCases";
 import { EditAgentForm } from "./components/agent-setup/EditAgentForm";
 import { Toaster } from "./components/ui/toaster";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -20,6 +21,7 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/use-cases" element={<UseCases />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/contact" element={<Contact />} />
