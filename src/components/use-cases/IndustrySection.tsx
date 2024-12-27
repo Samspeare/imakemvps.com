@@ -40,6 +40,15 @@ const tasks = [
     description: "Smart scheduling and task prioritization.",
     icon: <Calendar className="h-4 w-4 text-primary" />,
     agentIcon: <Bot className="h-3 w-3 text-primary-light" />,
+    details: {
+      task: "Organize tasks and optimize daily workflows.",
+      description: "An AI assistant that prioritizes tasks, schedules meetings, and sends reminders.",
+      solution: [
+        "Integrates with calendars.",
+        "Suggests the best times to work based on productivity patterns.",
+        "Automates follow-ups for overdue tasks."
+      ]
+    }
   },
   {
     title: "Support Agent",
