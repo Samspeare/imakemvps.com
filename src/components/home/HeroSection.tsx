@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
 
-const HeroSection = () => {
+export const HeroSection = () => {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Magical gradient background */}
@@ -91,5 +91,3 @@ const HeroSection = () => {
     </section>
   );
 };
-
-export default HeroSection;
