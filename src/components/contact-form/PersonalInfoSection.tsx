@@ -12,6 +12,24 @@ export const PersonalInfoSection = ({
   setFormData,
   isSubmitting,
 }: PersonalInfoProps) => {
+  const formatPhoneNumber = (value: string) => {
+    // Remove all non-digits
+    const numbers = value.replace(/\D/g, '');
+    
+    // Limit to 10 digits
+    const truncated = numbers.slice(0, 10);
+    
+    // Format with spaces: XXX XXX XXXX
+    const formatted = truncated.replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3');
+    
+    return formatted.trim();
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formatted = formatPhoneNumber(e.target.value);
+    setFormData({ ...formData, phoneNumber: formatted });
+  };
+
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold">Personal/Business Information</h2>
@@ -45,9 +63,12 @@ export const PersonalInfoSection = ({
           <Label htmlFor="phoneNumber">Phone Number</Label>
           <Input
             id="phoneNumber"
-            placeholder="e.g., +1 555-123-4567"
+            placeholder="999 999 9999"
             value={formData.phoneNumber}
-            onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
+            onChange={handlePhoneChange}
+            maxLength={12} // Account for spaces
+            inputMode="numeric"
+            pattern="[0-9 ]*"
             disabled={isSubmitting}
           />
         </div>
