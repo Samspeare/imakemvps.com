@@ -5,7 +5,7 @@ const PrivacyPolicy = () => {
     <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="text-3xl font-bold mb-8">Privacy Policy</h1>
       <div className="prose prose-lg max-w-none">
-        <p className="text-gray-600 mb-8">Effective Date: [Insert Date]</p>
+        <p className="text-gray-600 mb-8">Effective Date: 12/26/2024</p>
         
         <p className="mb-6">
           I Make MVPs.com ("we," "our," or "us") values your privacy and is committed to protecting your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website, interact with us, or use our services. By accessing or using I Make MVPs.com, you agree to the practices outlined in this Privacy Policy.
