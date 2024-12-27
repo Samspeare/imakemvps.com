@@ -25,14 +25,24 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#9b87f5",
-          light: "#b8a8f8",
-          dark: "#7E69AB",
+          DEFAULT: "#1E88E5", // Bright blue from the character
+          light: "#64B5F6", // Lighter blue for hover states
+          dark: "#1565C0", // Darker blue for active states
+          foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#8E9196",
-          light: "#A1A3A7",
-          dark: "#6E7075",
+          DEFAULT: "#FFB74D", // Gold accent from the character
+          light: "#FFD54F", // Lighter gold for hover states
+          dark: "#FFA000", // Darker gold for active states
+          foreground: "#000000",
+        },
+        accent: {
+          DEFAULT: "#E3F2FD", // Very light blue for backgrounds
+          foreground: "#1E88E5",
+        },
+        muted: {
+          DEFAULT: "#F5F5F5",
+          foreground: "#64748B",
         },
       },
       borderRadius: {
@@ -59,10 +69,26 @@ export default {
             opacity: "1",
           },
         },
+        "magical-gradient": {
+          "0%": {
+            backgroundPosition: "0% 50%",
+          },
+          "50%": {
+            backgroundPosition: "100% 50%",
+          },
+          "100%": {
+            backgroundPosition: "0% 50%",
+          },
+        },
       },
       animation: {
         "fade-up": "fade-up 0.5s ease-out",
         "fade-in": "fade-in 0.3s ease-out",
+        "magical-gradient": "magical-gradient 6s ease infinite",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "hero-pattern": "url('/lovable-uploads/7a7938ce-61ea-4018-a362-c8f81272bd5b.png')",
       },
     },
   },

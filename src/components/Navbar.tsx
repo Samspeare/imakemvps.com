@@ -70,7 +70,7 @@ const Navbar = () => {
         backgroundColor,
         boxShadow,
       }}
-      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md sticky"
+      className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
@@ -79,7 +79,7 @@ const Navbar = () => {
             whileTap={{ scale: 0.95 }}
           >
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-xl font-bold bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
+              <span className="text-xl font-bold magical-text-gradient">
                 I Make MVPs
               </span>
             </Link>
@@ -90,7 +90,7 @@ const Navbar = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="relative px-3 py-2 text-sm font-medium text-gray-600 hover:text-primary transition-colors"
+                className="relative px-3 py-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
               >
                 <motion.span
                   whileHover={{ y: -2 }}
@@ -121,7 +121,7 @@ const Navbar = () => {
                 <Button
                   variant="ghost"
                   onClick={handleSignOut}
-                  className="text-sm font-medium"
+                  className="text-sm font-medium hover:text-primary"
                 >
                   Sign Out
                 </Button>
@@ -132,7 +132,10 @@ const Navbar = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link to="/contact">
-                  <Button variant="default" className="text-sm font-medium rounded-full px-8">
+                  <Button 
+                    variant="default" 
+                    className="text-sm font-medium rounded-full px-8 bg-primary hover:bg-primary-dark text-white magical-border-gradient"
+                  >
                     Schedule A Consult
                   </Button>
                 </Link>
