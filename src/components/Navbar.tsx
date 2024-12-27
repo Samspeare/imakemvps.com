@@ -132,12 +132,12 @@ const Navbar = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <Link to="/contact">
-                  <Button 
-                    variant="default" 
-                    className="text-sm font-medium rounded-full px-8 bg-primary hover:bg-primary-dark text-white magical-border-gradient"
-                  >
-                    Schedule A Consult
-                  </Button>
+                  <div className="relative p-[2px] overflow-hidden rounded-full group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto]"></div>
+                    <button className="relative px-8 py-2 rounded-full bg-background text-primary hover:text-primary-dark font-medium text-sm transition-colors duration-200">
+                      Schedule A Consult
+                    </button>
+                  </div>
                 </Link>
               </motion.div>
             )}
