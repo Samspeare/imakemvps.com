@@ -77,20 +77,6 @@ export const HeroSection = () => {
           </motion.div>
         </motion.div>
       </div>
-
-      {/* AI Character Image */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.8, duration: 0.8 }}
-        className="absolute bottom-0 right-0 w-64 h-64 md:w-96 md:h-96 -z-10 opacity-20"
-      >
-        <img
-          src="/lovable-uploads/7a7938ce-61ea-4018-a362-c8f81272bd5b.png"
-          alt="AI Assistant Character"
-          className="w-full h-full object-contain"
-        />
-      </motion.div>
     </section>
   );
 };
