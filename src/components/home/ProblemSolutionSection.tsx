@@ -13,8 +13,9 @@ export const ProblemSolutionSection = () => {
   ];
 
   const solutions = [
-    "I build custom AI agents to streamline workflows.",
-    "I help individuals and teams optimize productivity with technology."
+    "I design AI agents that handle the busy work for you, so you can focus on what truly matters.",
+    "I help individuals and teams take control of their time with smart technology that simplifies daily tasks and boosts productivity.",
+    "I create tailored AI tools that solve your unique challenges—whether it's automating processes, improving decision-making, or saving you hours every day."
   ];
 
   return (
@@ -27,6 +28,12 @@ export const ProblemSolutionSection = () => {
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-bold text-gray-900 mb-4">How I Can Help You</h2>
+          <p className="text-gray-600 max-w-3xl mx-auto">
+            Not sure where to start or what AI can do for you? Let's just have a conversation. 
+            We can chat about your goals, challenges, or ideas, and I'll share some friendly advice 
+            or possibilities you might not have thought of—no strings attached. You can take what 
+            we discuss and run with it, or we can explore working together to bring those ideas to life.
+          </p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
