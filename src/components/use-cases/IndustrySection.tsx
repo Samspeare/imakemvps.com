@@ -55,6 +55,15 @@ const tasks = [
     description: "24/7 instant customer assistance.",
     icon: <MessageSquare className="h-4 w-4 text-primary" />,
     agentIcon: <Bot className="h-3 w-3 text-primary-light" />,
+    details: {
+      task: "Provide instant, personalized responses to customers.",
+      description: "AI chatbots tailored for customer support and lead nurturing.",
+      solution: [
+        "Answer FAQs intelligently.",
+        "Capture and manage leads automatically.",
+        "Provide 24/7 support."
+      ]
+    }
   },
   {
     title: "Data Analyst",
