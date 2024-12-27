@@ -8,7 +8,7 @@ const ModelTiers = () => {
         <div className="space-y-2">
           <div className="aspect-square relative rounded-lg overflow-hidden">
             <img 
-              src="/lovable-uploads/4e231652-f71f-43a4-8046-ba5578610e24.png" 
+              src="/lovable-uploads/71dc72e0-2787-4bd9-856a-f17dde5d4f36.png" 
               alt="Base Model Tutor" 
               className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
             />
@@ -21,7 +21,7 @@ const ModelTiers = () => {
         <div className="space-y-2">
           <div className="aspect-square relative rounded-lg overflow-hidden">
             <img 
-              src="/lovable-uploads/71dc72e0-2787-4bd9-856a-f17dde5d4f36.png" 
+              src="/lovable-uploads/84d3916a-af2d-444a-9c02-057405ab5ebe.png" 
               alt="Advanced Model Tutor" 
               className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
             />
@@ -34,7 +34,7 @@ const ModelTiers = () => {
         <div className="space-y-2">
           <div className="aspect-square relative rounded-lg overflow-hidden">
             <img 
-              src="/lovable-uploads/84d3916a-af2d-444a-9c02-057405ab5ebe.png" 
+              src="/lovable-uploads/4e231652-f71f-43a4-8046-ba5578610e24.png" 
               alt="Ultra Model Tutor" 
               className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
             />
