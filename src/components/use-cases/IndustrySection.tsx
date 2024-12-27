@@ -25,6 +25,15 @@ const tasks = [
     description: "Generate engaging brand content instantly.",
     icon: <Bot className="h-4 w-4 text-primary" />,
     agentIcon: <Bot className="h-3 w-3 text-primary-light" />,
+    details: {
+      task: "Generate and schedule social media content effortlessly.",
+      description: "Create AI tools to draft engaging posts, design visuals, and optimize scheduling for better reach.",
+      solution: [
+        "Generate captions and hashtags using AI.",
+        "Create on-brand image templates.",
+        "Automate multi-platform posting."
+      ]
+    }
   },
   {
     title: "Personal Coach",
@@ -113,7 +122,7 @@ const IndustrySection = () => {
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        {selectedTask && (
+        {selectedTask && selectedTask.details && (
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
@@ -126,16 +135,16 @@ const IndustrySection = () => {
             <div className="space-y-4">
               <div>
                 <h4 className="font-medium mb-1">Task</h4>
-                <p className="text-sm text-muted-foreground">{selectedTask.details?.task}</p>
+                <p className="text-sm text-muted-foreground">{selectedTask.details.task}</p>
               </div>
               <div>
                 <h4 className="font-medium mb-1">Description</h4>
-                <p className="text-sm text-muted-foreground">{selectedTask.details?.description}</p>
+                <p className="text-sm text-muted-foreground">{selectedTask.details.description}</p>
               </div>
               <div>
                 <h4 className="font-medium mb-1">Solution</h4>
                 <ul className="list-disc pl-4 text-sm text-muted-foreground space-y-1">
-                  {selectedTask.details?.solution.map((item, index) => (
+                  {selectedTask.details.solution.map((item, index) => (
                     <li key={index}>{item}</li>
                   ))}
                 </ul>
