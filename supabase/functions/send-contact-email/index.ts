@@ -34,7 +34,37 @@ const handler = async (req: Request): Promise<Response> => {
     const formData: ContactFormData = await req.json();
     console.log("Received contact form submission:", formData);
 
-    const emailContent = `
+    // Create a machine-readable version with clear delimiters
+    const machineReadableContent = `
+---START_CONTACT_FORM---
+SECTION:PERSONAL
+FULL_NAME:${formData.fullName || 'Not provided'}
+EMAIL:${formData.email || 'Not provided'}
+PHONE:${formData.phoneNumber || 'Not provided'}
+BUSINESS:${formData.businessName || 'Not provided'}
+JOB_TITLE:${formData.jobTitle || 'Not provided'}
+
+SECTION:PROJECT
+TYPE:${formData.projectType || 'Not provided'}
+DESCRIPTION:${formData.projectDescription || 'Not provided'}
+OUTCOME:${formData.preferredOutcome || 'Not provided'}
+
+SECTION:BUDGET
+RANGE:${formData.budgetRange || 'Not provided'}
+TIMELINE:${formData.projectTimeline || 'Not provided'}
+
+SECTION:TOOLS
+EXISTING_TOOLS:${formData.existingTools || 'Not provided'}
+HAS_DATASET:${formData.hasDataset || 'Not provided'}
+
+SECTION:COMMUNICATION
+CONTACT_METHOD:${formData.contactMethod || 'Not provided'}
+BEST_TIME:${formData.bestTimeToContact || 'Not provided'}
+---END_CONTACT_FORM---
+`;
+
+    // Create a human-readable HTML version
+    const humanReadableContent = `
       <h2>New Contact Form Submission</h2>
       
       <h3>Personal/Business Information</h3>
@@ -70,6 +100,11 @@ const handler = async (req: Request): Promise<Response> => {
         <li><strong>Preferred Contact Method:</strong> ${formData.contactMethod || 'Not provided'}</li>
         <li><strong>Best Time to Contact:</strong> ${formData.bestTimeToContact || 'Not provided'}</li>
       </ul>
+
+      <hr>
+      <pre style="font-family: monospace; background-color: #f5f5f5; padding: 15px; margin-top: 20px;">
+${machineReadableContent}
+      </pre>
     `;
 
     const res = await fetch("https://api.resend.com/emails", {
@@ -82,7 +117,7 @@ const handler = async (req: Request): Promise<Response> => {
         from: "I Make MVPs <onboarding@resend.dev>",
         to: ["sam@imakemvps.com"],
         subject: "New Contact Form Submission",
-        html: emailContent,
+        html: humanReadableContent,
       }),
     });
 
