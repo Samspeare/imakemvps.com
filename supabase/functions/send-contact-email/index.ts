@@ -35,36 +35,41 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Received contact form submission:", formData);
 
     const emailContent = `
-      New Contact Form Submission:
+      <h2>New Contact Form Submission</h2>
       
-      Personal/Business Information:
-      ----------------------------
-      Full Name: ${formData.fullName || 'Not provided'}
-      Email: ${formData.email || 'Not provided'}
-      Phone Number: ${formData.phoneNumber || 'Not provided'}
-      Business Name: ${formData.businessName || 'Not provided'}
-      Job Title: ${formData.jobTitle || 'Not provided'}
+      <h3>Personal/Business Information</h3>
+      <ul>
+        <li><strong>Full Name:</strong> ${formData.fullName || 'Not provided'}</li>
+        <li><strong>Email:</strong> ${formData.email || 'Not provided'}</li>
+        <li><strong>Phone Number:</strong> ${formData.phoneNumber || 'Not provided'}</li>
+        <li><strong>Business Name:</strong> ${formData.businessName || 'Not provided'}</li>
+        <li><strong>Job Title:</strong> ${formData.jobTitle || 'Not provided'}</li>
+      </ul>
       
-      Project Details:
-      ---------------
-      Project Type: ${formData.projectType || 'Not provided'}
-      Project Description: ${formData.projectDescription || 'Not provided'}
-      Preferred Outcome: ${formData.preferredOutcome || 'Not provided'}
+      <h3>Project Details</h3>
+      <ul>
+        <li><strong>Project Type:</strong> ${formData.projectType || 'Not provided'}</li>
+        <li><strong>Project Description:</strong> ${formData.projectDescription || 'Not provided'}</li>
+        <li><strong>Preferred Outcome:</strong> ${formData.preferredOutcome || 'Not provided'}</li>
+      </ul>
       
-      Budget & Timeline:
-      ----------------
-      Budget Range: ${formData.budgetRange || 'Not provided'}
-      Project Timeline: ${formData.projectTimeline || 'Not provided'}
+      <h3>Budget & Timeline</h3>
+      <ul>
+        <li><strong>Budget Range:</strong> ${formData.budgetRange || 'Not provided'}</li>
+        <li><strong>Project Timeline:</strong> ${formData.projectTimeline || 'Not provided'}</li>
+      </ul>
       
-      Tools & Systems:
-      --------------
-      Existing Tools: ${formData.existingTools || 'Not provided'}
-      Has Dataset: ${formData.hasDataset || 'Not provided'}
+      <h3>Tools & Systems</h3>
+      <ul>
+        <li><strong>Existing Tools:</strong> ${formData.existingTools || 'Not provided'}</li>
+        <li><strong>Has Dataset:</strong> ${formData.hasDataset || 'Not provided'}</li>
+      </ul>
       
-      Communication Preferences:
-      -----------------------
-      Preferred Contact Method: ${formData.contactMethod || 'Not provided'}
-      Best Time to Contact: ${formData.bestTimeToContact || 'Not provided'}
+      <h3>Communication Preferences</h3>
+      <ul>
+        <li><strong>Preferred Contact Method:</strong> ${formData.contactMethod || 'Not provided'}</li>
+        <li><strong>Best Time to Contact:</strong> ${formData.bestTimeToContact || 'Not provided'}</li>
+      </ul>
     `;
 
     const res = await fetch("https://api.resend.com/emails", {
@@ -77,7 +82,7 @@ const handler = async (req: Request): Promise<Response> => {
         from: "I Make MVPs <onboarding@resend.dev>",
         to: ["sam@imakemvps.com"],
         subject: "New Contact Form Submission",
-        html: `<pre>${emailContent}</pre>`,
+        html: emailContent,
       }),
     });
 
