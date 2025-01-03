@@ -8,9 +8,20 @@ const corsHeaders = {
 };
 
 interface ContactFormData {
-  name: string;
+  fullName: string;
   email: string;
-  message: string;
+  phoneNumber: string;
+  businessName: string;
+  jobTitle: string;
+  projectType: string;
+  projectDescription: string;
+  preferredOutcome: string;
+  budgetRange: string;
+  projectTimeline: string;
+  existingTools: string;
+  hasDataset: string;
+  contactMethod: string;
+  bestTimeToContact: string;
 }
 
 const handler = async (req: Request): Promise<Response> => {
@@ -26,9 +37,34 @@ const handler = async (req: Request): Promise<Response> => {
     const emailContent = `
       New Contact Form Submission:
       
-      Name: ${formData.name}
-      Email: ${formData.email}
-      Message: ${formData.message}
+      Personal/Business Information:
+      ----------------------------
+      Full Name: ${formData.fullName || 'Not provided'}
+      Email: ${formData.email || 'Not provided'}
+      Phone Number: ${formData.phoneNumber || 'Not provided'}
+      Business Name: ${formData.businessName || 'Not provided'}
+      Job Title: ${formData.jobTitle || 'Not provided'}
+      
+      Project Details:
+      ---------------
+      Project Type: ${formData.projectType || 'Not provided'}
+      Project Description: ${formData.projectDescription || 'Not provided'}
+      Preferred Outcome: ${formData.preferredOutcome || 'Not provided'}
+      
+      Budget & Timeline:
+      ----------------
+      Budget Range: ${formData.budgetRange || 'Not provided'}
+      Project Timeline: ${formData.projectTimeline || 'Not provided'}
+      
+      Tools & Systems:
+      --------------
+      Existing Tools: ${formData.existingTools || 'Not provided'}
+      Has Dataset: ${formData.hasDataset || 'Not provided'}
+      
+      Communication Preferences:
+      -----------------------
+      Preferred Contact Method: ${formData.contactMethod || 'Not provided'}
+      Best Time to Contact: ${formData.bestTimeToContact || 'Not provided'}
     `;
 
     const res = await fetch("https://api.resend.com/emails", {
