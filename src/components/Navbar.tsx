@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { NavLinks } from "./navigation/NavLinks";
 import { MobileMenu } from "./navigation/MobileMenu";
+import { Briefcase, Users2, BookOpen, Phone, LayoutDashboard, Settings } from "lucide-react";
 
 const Navbar = () => {
   const { toast } = useToast();
@@ -58,12 +59,45 @@ const Navbar = () => {
   const isAdmin = user?.email === "sam@imakemvps.com";
 
   const links = [
-    { to: "/", label: "Home" },
-    { to: "/use-cases", label: "Solutions" },
-    { to: "/blog", label: "Success Stories" },
-    { to: "/contact", label: "Contact" },
-    ...(user ? [{ to: "/dashboard", label: "Dashboard" }] : []),
-    ...(isAdmin ? [{ to: "/admin/blog", label: "Manage Blog" }] : []),
+    { 
+      to: "/", 
+      label: "Home",
+      icon: null
+    },
+    { 
+      to: "/use-cases", 
+      label: "Business Solutions",
+      icon: Briefcase,
+      description: "AI-powered tools for business automation and growth"
+    },
+    { 
+      to: "/creators", 
+      label: "Creator Tools",
+      icon: Users2,
+      description: "Content creation and audience growth solutions"
+    },
+    { 
+      to: "/blog", 
+      label: "Success Stories",
+      icon: BookOpen,
+      description: "Real results from businesses and creators"
+    },
+    { 
+      to: "/contact", 
+      label: "Get Started",
+      icon: Phone,
+      description: "Schedule a personalized consultation"
+    },
+    ...(user ? [{ 
+      to: "/dashboard", 
+      label: "Dashboard",
+      icon: LayoutDashboard
+    }] : []),
+    ...(isAdmin ? [{ 
+      to: "/admin/blog", 
+      label: "Manage Blog",
+      icon: Settings
+    }] : []),
   ];
 
   return (
