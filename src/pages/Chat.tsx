@@ -86,30 +86,24 @@ const Chat = () => {
     setMessages(prev => [...prev, newMessage]);
     setInput("");
 
-    // Save user message
-    await supabase
-      .from("chat_messages")
-      .insert({
-        session_id: sessionId,
-        role: newMessage.role,
-        content: newMessage.content,
+    try {
+      const { data, error } = await supabase.functions.invoke("chat-completion", {
+        body: { message: content, sessionId }
       });
 
-    // TODO: Implement AI response logic here
-    const aiResponse = {
-      role: "assistant",
-      content: "I'm analyzing your request. Could you provide more details about your specific requirements and constraints?",
-    };
+      if (error) throw error;
 
-    setMessages(prev => [...prev, aiResponse]);
-
-    await supabase
-      .from("chat_messages")
-      .insert({
-        session_id: sessionId,
-        role: aiResponse.role,
-        content: aiResponse.content,
+      if (data?.response) {
+        setMessages(prev => [...prev, { role: "assistant", content: data.response }]);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
       });
+    }
   };
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
