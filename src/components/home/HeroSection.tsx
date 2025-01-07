@@ -2,34 +2,48 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export const HeroSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref);
+  const [isClient, setIsClient] = useState(false);
+
+  // Hydration optimization
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   return (
     <section ref={ref} className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Magical gradient background - only animate when in view */}
-      {isInView && (
+      {/* Optimized gradient background - only animate when in view and on client */}
+      {isClient && isInView && (
         <motion.div
           className="absolute inset-0 bg-gradient-to-br from-accent via-background to-accent/50"
+          initial={{ opacity: 0 }}
           animate={{
+            opacity: 1,
             backgroundPosition: ["0% 0%", "100% 100%"],
           }}
           transition={{
-            duration: 20,
-            repeat: Infinity,
-            repeatType: "reverse",
-            ease: "linear",
+            opacity: { duration: 0.3 },
+            backgroundPosition: {
+              duration: 20,
+              repeat: Infinity,
+              repeatType: "reverse",
+              ease: "linear",
+            }
           }}
         />
       )}
       
-      {/* Decorative elements */}
-      <div className="absolute inset-0 bg-grid-black/[0.02] -z-10" />
+      {/* Optimized decorative elements */}
+      <div 
+        className="absolute inset-0 bg-grid-black/[0.02] -z-10" 
+        style={{ willChange: 'transform' }}
+      />
       
-      {/* Content */}
+      {/* Content with progressive enhancement */}
       <div className="relative max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -73,9 +87,12 @@ export const HeroSection = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <Link to="/use-cases">
+            <Link to="/use-cases" prefetch="intent">
               <div className="relative p-[2px] overflow-hidden rounded-full group">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto]"></div>
+                <div 
+                  className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto]"
+                  style={{ willChange: 'background-position' }}
+                />
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -87,6 +104,7 @@ export const HeroSection = () => {
             </Link>
             <Link 
               to="/contact" 
+              prefetch="intent"
               className="text-gray-600 hover:text-primary transition-colors flex items-center gap-2 group"
             >
               Schedule a Call
