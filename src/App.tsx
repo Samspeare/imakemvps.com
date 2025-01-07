@@ -10,6 +10,9 @@ import Dashboard from "./pages/Dashboard";
 import AdminBlog from "./pages/AdminBlog";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Creators from "./pages/Creators";
+import About from "./pages/About";
+import Support from "./pages/Support";
+import Plans from "./pages/Plans";
 import { Toaster } from "./components/ui/toaster";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
@@ -21,11 +24,15 @@ function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/plans" element={<Plans />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/support" element={<Support />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/use-cases" element={<UseCases />} />
             <Route path="/creators" element={<Creators />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route
               path="/dashboard"
               element={
@@ -42,7 +49,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           </Routes>
         </main>
         <Footer />
