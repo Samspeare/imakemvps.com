@@ -1,66 +1,53 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Plans = () => {
   const plans = [
     {
       name: "Starter",
-      price: "$10",
+      price: "49",
       features: [
-        "1 vCPU Core",
-        "2GB RAM",
-        "20GB SSD Storage",
-        "1TB Bandwidth",
-        "24/7 Support",
-      ],
+        "1 AI Agent",
+        "Basic Automation",
+        "Email Support",
+        "5 Scheduled Tasks"
+      ]
     },
     {
       name: "Professional",
-      price: "$25",
+      price: "99",
       features: [
-        "2 vCPU Cores",
-        "4GB RAM",
-        "50GB SSD Storage",
-        "2TB Bandwidth",
-        "24/7 Priority Support",
-        "Free Domain",
-      ],
+        "3 AI Agents",
+        "Advanced Automation",
+        "Priority Support",
+        "Unlimited Scheduled Tasks",
+        "Custom Integrations"
+      ]
     },
     {
       name: "Enterprise",
-      price: "$50",
+      price: "249",
       features: [
-        "4 vCPU Cores",
-        "8GB RAM",
-        "100GB SSD Storage",
-        "5TB Bandwidth",
-        "24/7 Priority Support",
-        "Free Domain",
-        "DDoS Protection",
-      ],
-    },
+        "Unlimited AI Agents",
+        "Custom Solutions",
+        "24/7 Support",
+        "Dedicated Account Manager",
+        "API Access",
+        "Custom Training"
+      ]
+    }
   ];
 
   return (
-    <div className="py-24 px-4 bg-gradient-to-b from-accent/30 to-background">
+    <div className="min-h-screen pt-24 pb-16 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl font-bold mb-4"
-          >
-            Choose Your Perfect VPS Plan
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-muted-foreground max-w-2xl mx-auto"
-          >
-            Scalable solutions for every business need. All plans include 99.9% uptime guarantee
-            and expert support.
-          </motion.p>
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold mb-4">Choose Your Plan</h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Select the perfect plan for your needs and start automating your workflow today
+          </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -69,11 +56,17 @@ const Plans = () => {
               key={plan.name}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className="relative p-8 rounded-2xl bg-white shadow-lg hover:shadow-xl transition-shadow"
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="relative p-8 rounded-2xl bg-white shadow-lg border border-gray-100"
             >
-              <h3 className="text-2xl font-semibold mb-4">{plan.name}</h3>
-              <div className="text-3xl font-bold mb-6">{plan.price}<span className="text-base font-normal text-muted-foreground">/month</span></div>
+              <div className="text-center mb-8">
+                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                <div className="flex items-center justify-center gap-1">
+                  <span className="text-4xl font-bold">${plan.price}</span>
+                  <span className="text-muted-foreground">/month</span>
+                </div>
+              </div>
+
               <ul className="space-y-4 mb-8">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-3">
@@ -82,7 +75,10 @@ const Plans = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full button-primary py-3">Get Started</button>
+
+              <Link to="/contact">
+                <Button className="w-full">Get Started</Button>
+              </Link>
             </motion.div>
           ))}
         </div>
