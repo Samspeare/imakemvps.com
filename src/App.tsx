@@ -8,6 +8,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import UseCases from "./pages/UseCases";
 import Dashboard from "./pages/Dashboard";
 import AdminBlog from "./pages/AdminBlog";
+import Chat from "./pages/Chat";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/use-cases" element={<UseCases />} />
+              <Route path="/chat" element={<Chat />} />
               <Route path="/dashboard" element={
                 <ProtectedRoute>
                   <Dashboard />

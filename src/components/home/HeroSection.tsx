@@ -1,8 +1,21 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowRight, Search, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export const HeroSection = () => {
+  const [query, setQuery] = useState("");
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (query.trim()) {
+      navigate(`/chat?q=${encodeURIComponent(query.trim())}`);
+    }
+  };
+
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Magical gradient background */}
@@ -56,8 +69,7 @@ export const HeroSection = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            MVP (Minimum Valuable Product) is about creating the simplest version of your product
-            that delivers real value to users while minimizing development time and costs.
+            Discover if AI can transform your business. Get a detailed feasibility assessment tailored to your needs.
           </motion.p>
           
           <motion.div
@@ -66,18 +78,25 @@ export const HeroSection = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <Link to="/use-cases">
-              <div className="relative p-[2px] overflow-hidden rounded-full group">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary via-secondary to-primary animate-magical-gradient bg-[length:200%_auto]"></div>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative px-8 py-4 rounded-full bg-background text-primary hover:text-primary-dark font-medium text-lg transition-colors duration-200"
+            <form onSubmit={handleSearch} className="w-full max-w-2xl">
+              <div className="relative">
+                <Input
+                  type="text"
+                  placeholder="Describe your project or challenge..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  className="w-full pl-4 pr-12 py-6 text-lg rounded-full shadow-lg"
+                />
+                <Button 
+                  type="submit"
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  size="icon"
                 >
-                  Explore Use Cases
-                </motion.button>
+                  <Search className="w-5 h-5" />
+                </Button>
               </div>
-            </Link>
+            </form>
+            
             <Link 
               to="/contact" 
               className="text-gray-600 hover:text-primary transition-colors flex items-center gap-2 group"
