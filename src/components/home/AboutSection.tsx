@@ -11,7 +11,6 @@ export const AboutSection = () => {
         className="max-w-7xl mx-auto"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -19,22 +18,25 @@ export const AboutSection = () => {
             className="space-y-6 lg:px-8 text-center"
           >
             <h3 className="text-xl text-primary font-semibold tracking-wide uppercase text-left pl-0">
-              About Me
+              Why Choose Us
             </h3>
             <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 tracking-tight">
-              Building The Future of Work
+              Your Success, Simplified
             </h2>
             <p className="text-xl text-gray-600">
-              I Make MVPs is building the future of work, where every interaction is improved with Artificial Intelligence and Agentic Designs.
+              We help small businesses and creators work smarter, not harder, by putting the power of AI in your hands.
             </p>
             <blockquote className="border-l-4 border-primary pl-4 italic text-gray-700 my-4">
-              "Any sufficiently advanced technology is indistinguishable from magic." – Arthur C. Clarke, Profiles of the Future: An Inquiry into the Limits of the Possible.
+              "Stop drowning in tasks. Start focusing on growth."
             </blockquote>
             <p className="text-lg text-gray-600">
-              I didn't have a background in coding or years of technical experience, but that didn't matter. AI sparked something in me—a fascination with its limitless potential. The deeper I went, the more I saw it wasn't just about generating text. It was about building solutions, automating the mundane, and transforming the way we live and work.
+              Running a business or managing your online presence shouldn't be overwhelming. 
+              Our AI tools handle the day-to-day work so you can focus on the big picture - 
+              growing your business and connecting with your audience.
             </p>
             <p className="text-lg text-gray-600">
-              Peeking behind the curtain, I didn't find mystery—I found opportunity. AI isn't just technology; it's the magic of possibility, waiting to be explored.
+              From scheduling posts to answering customer questions, we make it simple to get more done 
+              without hiring a full team.
             </p>
             <div className="mt-6">
               <motion.div
@@ -45,13 +47,12 @@ export const AboutSection = () => {
                   to="/contact"
                   className="inline-flex items-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-primary hover:bg-primary-dark transition-colors duration-200"
                 >
-                  Get started
+                  Start Your Free Trial
                 </Link>
               </motion.div>
             </div>
           </motion.div>
 
-          {/* Image */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}

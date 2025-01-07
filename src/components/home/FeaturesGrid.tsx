@@ -6,7 +6,6 @@ export const FeaturesGrid = () => {
     <section className="py-16 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Meetings Feature */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -22,14 +21,13 @@ export const FeaturesGrid = () => {
                 <Users className="w-6 h-6 text-primary" />
                 <MessageSquare className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="text-lg font-semibold text-purple-600">MEETINGS</h3>
+              <h3 className="text-lg font-semibold text-purple-600">TEAM CHAT</h3>
               <p className="text-gray-600">
-                AI-generated summaries, transcripts, and video highlights to make your meetings more efficient.
+                Never miss important messages. Your AI assistant summarizes discussions and highlights action items.
               </p>
             </div>
           </motion.div>
 
-          {/* Email Feature */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -44,14 +42,13 @@ export const FeaturesGrid = () => {
               <div className="flex gap-2">
                 <Mail className="w-6 h-6 text-pink-500" />
               </div>
-              <h3 className="text-lg font-semibold text-pink-600">EMAIL</h3>
+              <h3 className="text-lg font-semibold text-pink-600">INBOX HELPER</h3>
               <p className="text-gray-600">
-                Automated summaries, Q&A, and action items generated from your inbox with our Productivity AI.
+                Let AI handle customer emails, draft responses, and keep your inbox organized.
               </p>
             </div>
           </motion.div>
 
-          {/* Messaging Feature */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -66,14 +63,13 @@ export const FeaturesGrid = () => {
               <div className="flex gap-2">
                 <MessageSquare className="w-6 h-6 text-green-500" />
               </div>
-              <h3 className="text-lg font-semibold text-green-600">MESSAGING</h3>
+              <h3 className="text-lg font-semibold text-green-600">SOCIAL POSTS</h3>
               <p className="text-gray-600">
-                Automated summaries, Q&A, and action items generated across your team messages.
+                Create engaging content and schedule posts across all your social platforms.
               </p>
             </div>
           </motion.div>
 
-          {/* Scheduling Feature */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -88,9 +84,9 @@ export const FeaturesGrid = () => {
               <div className="flex gap-2">
                 <Calendar className="w-6 h-6 text-blue-500" />
               </div>
-              <h3 className="text-lg font-semibold text-blue-600">SCHEDULING & MORE</h3>
+              <h3 className="text-lg font-semibold text-blue-600">SMART CALENDAR</h3>
               <p className="text-gray-600">
-                Go beyond better meetings with Smart Scheduler, workflow integrations, and so much more!
+                Book meetings, manage your schedule, and get reminders for important tasks.
               </p>
             </div>
           </motion.div>
