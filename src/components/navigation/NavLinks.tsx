@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import { Home, Server, Info, HeadphonesIcon, Users, BookOpen } from "lucide-react";
 
 interface NavLink {
   to: string;
@@ -8,7 +9,46 @@ interface NavLink {
   description?: string;
 }
 
-export const NavLinks = ({ links, isMobile = false }: { links: NavLink[], isMobile?: boolean }) => {
+export const mainNavLinks: NavLink[] = [
+  {
+    to: "/",
+    label: "Home",
+    icon: Home,
+    description: "Return to the homepage"
+  },
+  {
+    to: "/plans",
+    label: "Plans",
+    icon: Server,
+    description: "View our VPS hosting plans"
+  },
+  {
+    to: "/about",
+    label: "About",
+    icon: Info,
+    description: "Learn more about our company"
+  },
+  {
+    to: "/support",
+    label: "Support",
+    icon: HeadphonesIcon,
+    description: "Get help and documentation"
+  },
+  {
+    to: "/creators",
+    label: "Creators",
+    icon: Users,
+    description: "Special tools for content creators"
+  },
+  {
+    to: "/blog",
+    label: "Blog",
+    icon: BookOpen,
+    description: "Read our latest articles"
+  }
+];
+
+export const NavLinks = ({ links = mainNavLinks, isMobile = false }: { links?: NavLink[], isMobile?: boolean }) => {
   const location = useLocation();
   
   const baseClasses = "group relative text-sm font-medium text-muted-foreground hover:text-primary transition-colors";
