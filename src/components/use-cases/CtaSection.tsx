@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Palette } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const CtaSection = () => {
   return (
@@ -15,38 +15,26 @@ const CtaSection = () => {
           className="space-y-8"
         >
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2">
-            <Palette className="w-4 h-4" />
-            <span className="text-sm font-medium">Start Creating Better Content Today</span>
+            <Sparkles className="w-4 h-4" />
+            <span className="text-sm font-medium">Start Your AI Journey Today</span>
           </div>
           <h2 className="text-4xl sm:text-5xl font-bold mb-8">
-            Ready to Transform Your <br className="hidden sm:block" />
-            Content Creation?
+            Ready to See How AI Can <br className="hidden sm:block" />
+            Work for You?
           </h2>
           <p className="text-lg text-white/80 max-w-2xl mx-auto mb-8">
-            Join successful creators who have increased their productivity by 300% and grown their audience exponentially with our AI tools
+            Book a free consultation and discover how our AI solutions can transform your workflow
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center px-8 py-4 bg-white text-primary rounded-full hover:bg-gray-100 transition-colors shadow-xl shadow-black/10 group"
-              >
-                Start Creating with AI
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </motion.button>
-            </Link>
-            <Link to="/blog">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center px-8 py-4 bg-white/10 text-white rounded-full hover:bg-white/20 transition-colors border border-white/20"
-              >
-                <Sparkles className="mr-2 h-5 w-5" />
-                View Creator Stories
-              </motion.button>
-            </Link>
-          </div>
+          <Link to="/contact">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center px-8 py-4 bg-white text-primary rounded-full hover:bg-gray-100 transition-colors shadow-xl shadow-black/10 group"
+            >
+              Book a Consultation
+              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+            </motion.button>
+          </Link>
         </motion.div>
       </div>
     </section>

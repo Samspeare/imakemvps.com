@@ -1,30 +1,30 @@
 import { motion } from "framer-motion";
-import { Palette, Users, TrendingUp, Clock } from "lucide-react";
+import { Rocket, Heart, Computer, Trophy } from "lucide-react";
 
 const impacts = [
   {
-    title: "Content Creation",
-    description: "Generate engaging posts, captions, and scripts in minutes instead of hours",
-    icon: <Palette className="h-8 w-8 text-primary" />,
-    label: "content"
+    title: "Productivity Boosts",
+    description: "Streamline workflows and automate repetitive tasks to maximize team efficiency",
+    icon: <Rocket className="h-8 w-8 text-primary" />,
+    label: "productivity"
   },
   {
-    title: "Audience Growth",
-    description: "Reach and engage with your target audience more effectively",
-    icon: <Users className="h-8 w-8 text-primary" />,
-    label: "audience"
+    title: "Reduced Burnout",
+    description: "Eliminate manual workload and create a more balanced work environment",
+    icon: <Heart className="h-8 w-8 text-primary" />,
+    label: "wellbeing"
   },
   {
-    title: "Performance Analytics",
-    description: "Get actionable insights to optimize your content strategy",
-    icon: <TrendingUp className="h-8 w-8 text-primary" />,
-    label: "analytics"
+    title: "Digitization",
+    description: "Transform manual processes into seamless digital workflows",
+    icon: <Computer className="h-8 w-8 text-primary" />,
+    label: "digital"
   },
   {
-    title: "Time Savings",
-    description: "Automate repetitive tasks and focus on creative work",
-    icon: <Clock className="h-8 w-8 text-primary" />,
-    label: "time"
+    title: "Competitive Advantages",
+    description: "Stay ahead of the curve with cutting-edge AI solutions",
+    icon: <Trophy className="h-8 w-8 text-primary" />,
+    label: "competitive"
   }
 ];
 
@@ -39,9 +39,9 @@ const ImpactSection = () => {
           viewport={{ once: true }}
           className="mb-16"
         >
-          <h2 className="text-4xl font-bold mb-4">Transform Your Creative Process</h2>
+          <h2 className="text-4xl font-bold mb-4">Transform Your Business</h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Experience the power of AI-driven content creation and see real growth in your online presence
+            Experience the power of AI-driven automation and see real results in your business operations
           </p>
         </motion.div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

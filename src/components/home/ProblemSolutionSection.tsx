@@ -16,7 +16,7 @@ export const ProblemSolutionSection = () => {
   ];
 
   return (
-    <section className="py-16 px-4 bg-gradient-to-br from-white via-accent/30 to-white">
+    <section className="py-16 px-4 bg-gradient-to-br from-white via-purple-50/30 to-white">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -40,13 +40,11 @@ export const ProblemSolutionSection = () => {
 
           {/* Text Content */}
           <div className="w-full md:w-2/3 text-left pl-0">
-            <h3 className="text-xl text-primary font-semibold tracking-wide uppercase mb-2">
+            <h3 className="text-xl text-primary font-semibold tracking-wide uppercase text-left pl-0">
               Your AI Partner
             </h3>
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6 bg-gradient-to-r from-primary-dark to-primary bg-clip-text text-transparent">
-              How I Can Help You
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mb-8">
+            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">How I Can Help You</h2>
+            <p className="text-gray-600 max-w-3xl">
               Not sure where to start or what AI can do for you? Let's just have a conversation. 
               We can chat about your goals, challenges, or ideas, and I'll share some friendly advice 
               or possibilities you might not have thought of—no strings attached.
@@ -55,15 +53,16 @@ export const ProblemSolutionSection = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.5 }}
+              className="mt-6"
             >
               <Link to="/contact">
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="button-primary px-6 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="inline-flex items-center px-6 py-3 bg-primary text-white rounded-full hover:bg-primary-dark transition-colors group"
                 >
                   Start a Conversation
-                  <MessageSquare className="ml-2 h-5 w-5" />
+                  <MessageSquare className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </motion.button>
               </Link>
             </motion.div>
@@ -71,25 +70,25 @@ export const ProblemSolutionSection = () => {
         </motion.div>
 
         {/* Problems and Solutions Grid */}
-        <div className="grid md:grid-cols-2 gap-12 items-start mb-12">
+        <div className="grid md:grid-cols-2 gap-12 items-center mb-12">
           {/* Problems Column */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-6"
           >
-            <h3 className="text-2xl font-bold text-gray-800 mb-8">Common Challenges</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-6">Common Challenges</h3>
             {problems.map((problem, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-primary/10"
+                className="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
               >
                 <AlertOctagon className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-                <p className="text-gray-700 text-lg">{problem}</p>
+                <p className="text-gray-700">{problem}</p>
               </motion.div>
             ))}
           </motion.div>
@@ -98,40 +97,40 @@ export const ProblemSolutionSection = () => {
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
             className="space-y-6"
           >
-            <h3 className="text-2xl font-bold text-gray-800 mb-8">My Solutions</h3>
+            <h3 className="text-xl font-semibold text-gray-800 mb-6">My Solutions</h3>
             {solutions.map((solution, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
-                className="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-success/10"
+                className="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
               >
-                <Check className="w-6 h-6 text-success flex-shrink-0 mt-1" />
-                <p className="text-gray-700 text-lg">{solution}</p>
+                <Check className="w-6 h-6 text-green-500 flex-shrink-0 mt-1" />
+                <p className="text-gray-700">{solution}</p>
               </motion.div>
             ))}
           </motion.div>
         </div>
 
-        {/* Centered CTA */}
+        {/* Centered Button */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
           className="flex justify-center"
         >
           <Link to="/contact">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="group flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="group flex items-center gap-2 bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full transition-all duration-300"
             >
               Schedule A Consultation
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </motion.button>
           </Link>
         </motion.div>

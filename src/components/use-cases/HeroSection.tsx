@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Sparkles, Palette, TrendingUp } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 
 const HeroSection = () => {
   return (
@@ -14,35 +14,16 @@ const HeroSection = () => {
       >
         <div className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-purple-100 rounded-full px-4 py-2 mb-8">
           <Sparkles className="w-4 h-4 text-primary" />
-          <span className="text-sm font-medium text-gray-600">AI-Powered Creator Tools</span>
+          <span className="text-sm font-medium text-gray-600">AI-Powered Solutions</span>
         </div>
         <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
-          Create Better Content <br className="hidden sm:block" />
-          10x Faster with AI
+          Transform Your Daily Tasks <br className="hidden sm:block" />
+          with Intelligent Automation
         </h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-          Transform your content creation workflow with AI tools that help you ideate, create, and optimize content that your audience will love.
+        <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+          Discover how our AI solutions can streamline your workflow, boost productivity, 
+          and help you achieve more in less time.
         </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
-          {[
-            { icon: Palette, text: "Generate Month's Worth of Content" },
-            { icon: TrendingUp, text: "40% Higher Engagement" },
-            { icon: Sparkles, text: "3x Faster Growth" }
-          ].map(({ icon: Icon, text }, index) => (
-            <motion.div
-              key={text}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="flex items-center justify-center gap-2 text-gray-700"
-            >
-              <Icon className="w-5 h-5 text-primary" />
-              <span className="font-medium">{text}</span>
-            </motion.div>
-          ))}
-        </div>
-
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <Link to="/contact">
             <motion.button
@@ -50,12 +31,12 @@ const HeroSection = () => {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center px-8 py-4 rounded-full bg-primary text-white hover:bg-primary-dark transition-colors shadow-lg shadow-primary/20"
             >
-              Try AI Tools Now
+              Start Your Journey
               <ArrowRight className="ml-2 h-5 w-5" />
             </motion.button>
           </Link>
           <Link to="/blog" className="text-gray-600 hover:text-primary transition-colors">
-            See Creator Success Stories →
+            Read Success Stories →
           </Link>
         </div>
       </motion.div>
