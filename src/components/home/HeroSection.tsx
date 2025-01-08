@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowRight, Search, Sparkles } from "lucide-react";
+import { ArrowRight, Brain } from "lucide-react";
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ChatBox } from "@/components/chat/ChatBox";
@@ -10,29 +9,17 @@ import { useToast } from "@/components/ui/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 
 export const HeroSection = () => {
-  const [query, setQuery] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (!query.trim()) {
-      toast({
-        title: "Please enter a query",
-        description: "Describe your project or challenge to get started.",
-        variant: "destructive",
-      });
-      return;
-    }
-
+  const handleAssessment = async () => {
     // Check if user is authenticated
     const { data: { user } } = await supabase.auth.getUser();
     
     if (!user) {
       toast({
         title: "Authentication required",
-        description: "Please sign in to start a chat session.",
+        description: "Please sign in to start your AI readiness assessment.",
         variant: "destructive",
       });
       return;
@@ -72,7 +59,7 @@ export const HeroSection = () => {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="inline-flex items-center gap-2 bg-white/60 backdrop-blur-sm border border-purple-100 rounded-full px-4 py-2"
           >
-            <Sparkles className="w-4 h-4 text-primary" />
+            <Brain className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium text-gray-600">AI-Powered Solutions</span>
           </motion.div>
 
@@ -101,24 +88,14 @@ export const HeroSection = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <form onSubmit={handleSearch} className="w-full max-w-2xl">
-              <div className="relative">
-                <Input
-                  type="text"
-                  placeholder="Describe your project or challenge..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  className="w-full pl-4 pr-12 py-6 text-lg rounded-full shadow-lg"
-                />
-                <Button 
-                  type="submit"
-                  className="absolute right-2 top-1/2 -translate-y-1/2"
-                  size="icon"
-                >
-                  <Search className="w-5 h-5" />
-                </Button>
-              </div>
-            </form>
+            <Button
+              onClick={handleAssessment}
+              size="lg"
+              className="text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              <Brain className="w-5 h-5 mr-2" />
+              FREE AI Readiness Assessment
+            </Button>
             
             <Link 
               to="/contact" 
@@ -133,7 +110,10 @@ export const HeroSection = () => {
 
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-3xl h-[80vh]">
-          <ChatBox initialMessage={query} onClose={() => setIsDialogOpen(false)} />
+          <ChatBox 
+            initialMessage="I'd like to assess my business's AI readiness" 
+            onClose={() => setIsDialogOpen(false)} 
+          />
         </DialogContent>
       </Dialog>
     </section>
