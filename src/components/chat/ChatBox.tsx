@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, X } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
+import { DialogTitle } from "@/components/ui/dialog";
 
 interface ChatBoxProps {
   initialMessage: string;
@@ -19,12 +20,18 @@ export const ChatBox = ({ initialMessage, onClose }: ChatBoxProps) => {
   useEffect(() => {
     const initializeChat = async () => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        // First check if user is authenticated
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
         
+        if (authError || !user) {
+          throw new Error("You must be logged in to start a chat session");
+        }
+
+        // Create new chat session with user_id
         const { data: session, error: sessionError } = await supabase
           .from("chat_sessions")
           .insert({
-            user_id: user?.id,
+            user_id: user.id,
             title: `AI Feasibility Assessment: ${initialMessage}`,
           })
           .select()
@@ -40,13 +47,15 @@ export const ChatBox = ({ initialMessage, onClose }: ChatBoxProps) => {
           content: "Hello! I'm here to help you assess the feasibility of your AI project. Could you tell me more about what you're looking to build?"
         };
         
-        await supabase
+        const { error: messageError } = await supabase
           .from("chat_messages")
           .insert({
             session_id: session.id,
             role: initialSystemMessage.role,
             content: initialSystemMessage.content,
           });
+          
+        if (messageError) throw messageError;
           
         setMessages([initialSystemMessage]);
         
@@ -57,14 +66,15 @@ export const ChatBox = ({ initialMessage, onClose }: ChatBoxProps) => {
         console.error("Error initializing chat:", error);
         toast({
           title: "Error",
-          description: "Failed to start chat session. Please try again.",
+          description: error.message || "Failed to start chat session. Please try again.",
           variant: "destructive",
         });
+        onClose(); // Close the chat box on error
       }
     };
 
     initializeChat();
-  }, [initialMessage, toast]);
+  }, [initialMessage, toast, onClose]);
 
   const handleSendMessage = async (content: string) => {
     if (!content.trim() || !sessionId) return;
@@ -78,6 +88,15 @@ export const ChatBox = ({ initialMessage, onClose }: ChatBoxProps) => {
     setInput("");
 
     try {
+      // Save user message
+      await supabase
+        .from("chat_messages")
+        .insert({
+          session_id: sessionId,
+          role: newMessage.role,
+          content: newMessage.content,
+        });
+
       const { data, error } = await supabase.functions.invoke("chat-completion", {
         body: { message: content, sessionId }
       });
@@ -85,7 +104,17 @@ export const ChatBox = ({ initialMessage, onClose }: ChatBoxProps) => {
       if (error) throw error;
 
       if (data?.response) {
-        setMessages(prev => [...prev, { role: "assistant", content: data.response }]);
+        const assistantMessage = { role: "assistant", content: data.response };
+        setMessages(prev => [...prev, assistantMessage]);
+        
+        // Save assistant message
+        await supabase
+          .from("chat_messages")
+          .insert({
+            session_id: sessionId,
+            role: assistantMessage.role,
+            content: assistantMessage.content,
+          });
       }
     } catch (error) {
       console.error("Error sending message:", error);
@@ -100,7 +129,7 @@ export const ChatBox = ({ initialMessage, onClose }: ChatBoxProps) => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex justify-between items-center p-4 border-b">
-        <h2 className="text-lg font-semibold">AI Assistant</h2>
+        <DialogTitle className="text-lg font-semibold">AI Assistant</DialogTitle>
         <Button variant="ghost" size="icon" onClick={onClose}>
           <X className="h-4 w-4" />
         </Button>
