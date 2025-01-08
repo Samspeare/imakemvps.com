@@ -4,21 +4,23 @@ import { ArrowRight, Search, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { ChatBox } from "@/components/chat/ChatBox";
 
 export const HeroSection = () => {
   const [query, setQuery] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      navigate(`/chat?q=${encodeURIComponent(query.trim())}`);
+      setIsDialogOpen(true);
     }
   };
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Magical gradient background */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-br from-accent via-background to-accent/50"
         animate={{
@@ -32,7 +34,6 @@ export const HeroSection = () => {
         }}
       />
       
-      {/* Decorative elements */}
       <div className="absolute inset-0 bg-grid-black/[0.02] -z-10" />
       
       {/* Content */}
@@ -107,6 +108,12 @@ export const HeroSection = () => {
           </motion.div>
         </motion.div>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-3xl h-[80vh]">
+          <ChatBox initialMessage={query} onClose={() => setIsDialogOpen(false)} />
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
