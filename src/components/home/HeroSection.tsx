@@ -1,31 +1,13 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Brain } from "lucide-react";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { ChatBox } from "@/components/chat/ChatBox";
-import { useToast } from "@/components/ui/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 
 export const HeroSection = () => {
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const handleAssessment = async () => {
-    // Check if user is authenticated
-    const { data: { user } } = await supabase.auth.getUser();
-    
-    if (!user) {
-      toast({
-        title: "Authentication required",
-        description: "Please sign in to start your AI readiness assessment.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsDialogOpen(true);
+  const handleAssessment = () => {
+    navigate('/assessment');
   };
 
   return (
@@ -45,7 +27,6 @@ export const HeroSection = () => {
       
       <div className="absolute inset-0 bg-grid-black/[0.02] -z-10" />
       
-      {/* Content */}
       <div className="relative max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -107,15 +88,6 @@ export const HeroSection = () => {
           </motion.div>
         </motion.div>
       </div>
-
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-3xl h-[80vh]">
-          <ChatBox 
-            initialMessage="I'd like to assess my business's AI readiness" 
-            onClose={() => setIsDialogOpen(false)} 
-          />
-        </DialogContent>
-      </Dialog>
     </section>
   );
 };
