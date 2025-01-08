@@ -1,22 +1,44 @@
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ArrowRight, Search, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { ChatBox } from "@/components/chat/ChatBox";
+import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 export const HeroSection = () => {
   const [query, setQuery] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (query.trim()) {
-      setIsDialogOpen(true);
+    
+    if (!query.trim()) {
+      toast({
+        title: "Please enter a query",
+        description: "Describe your project or challenge to get started.",
+        variant: "destructive",
+      });
+      return;
     }
+
+    // Check if user is authenticated
+    const { data: { user } } = await supabase.auth.getUser();
+    
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to start a chat session.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsDialogOpen(true);
   };
 
   return (
